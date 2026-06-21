@@ -42,14 +42,6 @@ function mod.process_loc_text()
         "{C:red}-1{} discard",
     }
 
-    D.Joker.j_idol.text = {
-        "This Joker gains {X:mult,C:white}X0.1{} Mult",
-        "when a",
-        "{C:attention}#2#{} of {V:1}#3#{} is scored",
-        "{C:inactive}(Currently {X:mult,C:white}X#1#{C:inactive})",
-	"card changes every round",
-    }
-
     D.Joker.j_troubadour.text = {
         "{C:attention}+#1#{} hand size,",
         "{C:red}-#2#{} discard",
@@ -97,6 +89,7 @@ function mod.process_loc_text()
             "{C:money}-$1{} {C:tarot}Tarot{} & {C:tarot}Arcana{} cost",
         }
     end
+	
     if D.Voucher.v_tarot_tycoon then
         D.Voucher.v_tarot_tycoon.text = {
             "{C:tarot}Tarot{} cards appear",
@@ -190,12 +183,13 @@ if D.Voucher.v_glow_up then
             "held {C:attention}consumables{} to Mult",
             "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
         }
+	end
 	if D.Joker.j_throwback then
        	 D.Joker.j_throwback.text = {
                     "{X:mult,C:white} X#1# {} Mult for each",
                     "{C:attention}Tag{} gained this run",
                     "{C:inactive}(Currently {X:mult,C:white} X#2# {C:inactive} Mult)",
-}
+		}
     end
 
     if D.Spectral and D.Spectral.c_black_hole then
