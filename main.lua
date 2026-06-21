@@ -221,6 +221,4 @@ if D.Voucher.v_glow_up then
             "{C:spectral}Jumbo Spectral Pack",
         }
    		 end
-
 	end
-end
