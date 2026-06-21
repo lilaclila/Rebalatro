@@ -1,0 +1,112 @@
+
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 0
+
+
+[[patches]]
+[patches.pattern]
+target = "tag.lua"
+pattern = """                    card = create_card('Joker', _context.area, nil, 1, nil, nil, nil, 'rta')"""
+position = "at"
+payload = """                    card = create_card('Joker', _context.area, nil, 1, nil, nil, nil, 'rta')
+                    card.ability.eternal = nil; card.ability.perishable = nil; card.ability.rental = nil"""
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "tag.lua"
+pattern = """                card = create_card('Joker', _context.area, nil, 0.9, nil, nil, nil, 'uta')"""
+position = "at"
+payload = """                card = create_card('Joker', _context.area, nil, 0.9, nil, nil, nil, 'uta')
+                card.ability.eternal = nil; card.ability.perishable = nil; card.ability.rental = nil"""
+match_indent = true
+
+
+[[patches]]
+[patches.pattern]
+target = "tag.lua"
+pattern = """                        _context.card:set_edition({foil = true}, true)"""
+position = "at"
+payload = """                        _context.card:set_edition({foil = true}, true)
+                        _context.card.ability.eternal = nil; _context.card.ability.perishable = nil; _context.card.ability.rental = nil"""
+match_indent = true
+
+
+[[patches]]
+[patches.pattern]
+target = "tag.lua"
+pattern = """                        _context.card:set_edition({holo = true}, true)"""
+position = "at"
+payload = """                        _context.card:set_edition({holo = true}, true)
+                        _context.card.ability.eternal = nil; _context.card.ability.perishable = nil; _context.card.ability.rental = nil"""
+match_indent = true
+
+
+[[patches]]
+[patches.pattern]
+target = "tag.lua"
+pattern = """                        _context.card:set_edition({polychrome = true}, true)"""
+position = "at"
+payload = """                        _context.card:set_edition({polychrome = true}, true)
+                        _context.card.ability.eternal = nil; _context.card.ability.perishable = nil; _context.card.ability.rental = nil"""
+match_indent = true
+
+
+[[patches]]
+[patches.pattern]
+target = "tag.lua"
+pattern = """                        _context.card:set_edition({negative = true}, true)"""
+position = "at"
+payload = """                        _context.card:set_edition({negative = true}, true)
+                        _context.card.ability.eternal = nil; _context.card.ability.perishable = nil; _context.card.ability.rental = nil"""
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = """                    {string = 'rand()', colour = G.C.JOKER_GREY},{string = "#@"..(G.deck and G.deck.cards[1] and G.deck.cards[#G.deck.cards].base.id or 11)..(G.deck and G.deck.cards[1] and G.deck.cards[#G.deck.cards].base.suit:sub(1,1) or 'D'), colour = G.C.RED},"""
+position = "at"
+payload = """                    {string = 'rand()', colour = G.C.JOKER_GREY},{string = "#@"..((self.area == G.jokers and G.deck and G.deck.cards[1]) and (G.deck.cards[#G.deck.cards].base.id..G.deck.cards[#G.deck.cards].base.suit:sub(1,1)) or '11D'), colour = G.C.RED},"""
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = """
+G.hand.config.card_limits.blind_restriction = hand_space - math.min(#G.deck.cards, 3)
+hand_space = math.min(#G.deck.cards, 3)
+"""
+position = "at"
+payload = """
+local num_cards = math.max(0, math.min(#G.deck.cards, 3, G.hand.config.card_limit - #G.hand.cards))
+G.hand.config.card_limits.blind_restriction = hand_space - num_cards
+hand_space = num_cards"""
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "UI_definitions.lua"
+pattern = """{n=G.UIT.T, config={text = string.rep(localize("$"), blind_choice.config.dollars)..'+', scale = 0.35, colour = disabled and G.C.UI.TEXT_INACTIVE or G.C.MONEY, shadow = not disabled}}"""
+position = "at"
+payload = """
+{n=G.UIT.T, config={text = string.rep(localize("$"), math.max(0, blind_choice.config.dollars - ((G.GAME.stake or 1) >= 2 and 1 or 0)))..'+', scale = 0.35, colour = disabled and G.C.UI.TEXT_INACTIVE or G.C.MONEY, shadow = not disabled}}
+"""
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "update_hand_text({sound = 'button', volume = 0.7, pitch = 0.9, delay = 0}, {level='+1'})"
+position = "at"
+payload = "update_hand_text({sound = 'button', volume = 0.7, pitch = 0.9, delay = 0}, {level='+3'})"
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "level_up_hand(self, k, true)"
+position = "at"
+payload = "level_up_hand(self, k, true, 3)"
+match_indent = true

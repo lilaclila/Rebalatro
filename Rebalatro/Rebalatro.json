@@ -1,0 +1,16 @@
+{
+	"id": "Rebalatro",
+	"name": "Rebalatro",
+	"display_name": "Rebalatro",
+	"author": ["LilacLila - github, LilacLilo - discord"],
+	"description": "A rebalance of Balatro's vanilla content",
+	"prefix": "rebal",
+	"main_file": "main.lua",
+	"priority": 1,
+	"badge_colour": "87FFF7",
+	"badge_text_colour": "FFFFFF",
+	"version": "1.0.0",
+	"dependencies": [
+		"Steamodded (>=1.0.0~)"
+	]
+}
