@@ -22,6 +22,7 @@ SMODS.Joker:take_ownership('j_mail', {
 }, true)
 
 SMODS.Joker:take_ownership('j_idol', {
+	perishable_compat = false
     config = {extra = 0.1, x_mult = 1},
 	loc_txt = {
         name = 'The Idol',
