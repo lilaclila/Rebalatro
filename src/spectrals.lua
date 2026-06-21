@@ -1,6 +1,6 @@
 SMODS.Consumable:take_ownership('c_ouija', {
 	use = function(self, card, area, copier)
-	G.E.MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
+	G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
 	play_sound('tarot1')
 	card:juice_up(0.3, 0.5)
 	return true
