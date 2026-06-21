@@ -9,8 +9,7 @@ local files = {
 	'planets',
 	'spectrals',
 	'tags',
-	'vouchers',
-	'hooks'
+	'vouchers'
 }
 
 for _, f in ipairs(files) do
