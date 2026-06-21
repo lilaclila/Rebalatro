@@ -75,3 +75,7 @@ no longer has Telescope voucher,
 
 - Changed Satellite - now starts at $2 a round, still scaling by +$1 for every unique planet card used this run 
 
+KNOWN BUGS:
+- Big Blind and Boss Blind displayed $ Reward is incorrect at Red Stake+ in the Blind Select or Run Info -> Blinds screen
+- Initial hands and discards are incorrect at Blue Stake+
+- Double Tag localization is incorrect, as I have not yet implemented my double tag rework.
