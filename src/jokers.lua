@@ -81,7 +81,7 @@ SMODS.Joker:take_ownership('j_to_the_moon', {
             "{C:attention}interest{} for every {C:money}$5{} you",
             "have at end of round.",
             "Increase cap on interest earned",
-	    "per round by{C:money}$2{}"
+	    "per round by {C:money}$2{}"
         }
     },
     
