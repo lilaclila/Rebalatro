@@ -10,10 +10,9 @@ THIS MOD REQUIRES STEAMODDED AND LOVELY!
 - Changed Black Deck - Now gives -1 discard, was -1 hands
 
 - Changed Nebula Deck:
-
-no longer has -1 consumable slot, 
-no longer has Telescope voucher, 
-- Added new effect - after exiting the shop, open a free normal celestial pack.
+    - no longer has -1 consumable slot, 
+    - no longer has Telescope voucher, 
+    - Added new effect - after exiting the shop, open a free normal celestial pack.
 
 
 - Changed The Serpent - now draw at most 3 cards after play or discard, instead of "always draw 3"
