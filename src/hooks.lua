@@ -29,40 +29,47 @@ if Card and Card.set_cost then
         local uv  = (G.GAME and G.GAME.used_vouchers) or {}
         local set = self.ability and self.ability.set
         local key = self.config and self.config.center and self.config.center.key
-	local planet_discount = 0
-	if uv.v_planet_tycoon then
-		planet_discount = 2
-	elseif uv.v_planet_merchant then
-		planet_discount = 1
-	end
+        
+        local planet_discount = 0
+        if uv.v_planet_tycoon then
+            planet_discount = 2
+        elseif uv.v_planet_merchant then
+            planet_discount = 1
+        end
         if planet_discount > 0 and (set == 'Planet' or (key and string.find(key, 'celestial'))) then
             self.cost = math.max(0, (self.cost or 0) - planet_discount)
         end
-	local tarot_discount = 0
-	if uv.v_tarot_tycoon then
-		tarot_discount = 2
-	elseif uv.v_tarot_merchant then
-		tarot_discount = 1
-	end
+        
+        local tarot_discount = 0
+        if uv.v_tarot_tycoon then
+            tarot_discount = 2
+        elseif uv.v_tarot_merchant then
+            tarot_discount = 1
+        end
         if tarot_discount > 0 and (set == 'Tarot' or (key and string.find(key, 'arcana'))) then
             self.cost = math.max(0, (self.cost or 0) - tarot_discount)
         end
+        
         if self.ability and self.ability.perishable then
-		local base_sell = 0
+            local base_sell = 0
             if self.ability.rental then
                 base_sell = 1 
             else
-		base_sell = self.cost
-	    end
-	
-	    self.sell_cost = math.max(1, base_sell + (self.ability.extra_value or 0))
+                base_sell = self.cost
             end
-        if self.ability and self.ability.couponed
-           and self.area and self.area == G.shop_vouchers then
+            
+            if self.ability.perish_tally and self.ability.perish_tally <= 0 then
+                self.sell_cost = math.max(1, base_sell) + (self.ability.extra_value or 0)
+            else
+                self.sell_cost = math.max(1, math.floor(base_sell / 2)) + (self.ability.extra_value or 0)
+            end
+        end
+        
+        if self.ability and self.ability.couponed and self.area and self.area == G.shop_vouchers then
             self.cost = 0
-        		end
-   		 end
-	end
+        end
+    end
+end
 
 if Card and Card.set_perishable then
     local _set_perishable = Card.set_perishable
@@ -305,5 +312,19 @@ if Game and Game.update then
                 end
             end
         end
+    end
+end
+
+if Card and Card.calculate_joker then
+    local _calculate_joker = Card.calculate_joker
+    function Card:calculate_joker(context)
+        local ret = _calculate_joker(self, context)
+
+        if context.end_of_round and not context.blueprint and not context.individual and not context.repetition then
+            if self.ability and self.ability.perishable and self.set_cost then
+                self:set_cost()
+            end
+        end
+        return ret
     end
 end
