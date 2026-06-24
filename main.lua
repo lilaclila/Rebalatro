@@ -1,15 +1,15 @@
 local mod = SMODS.current_mod
 
 local files = {
-	'blinds',     
-	'challenges',       
-	'decks',      
-	'hooks',
-	'jokers',
-	'planets',
-	'spectrals',
-	'tags',
-	'vouchers'
+    'blinds',     
+    'challenges',        
+    'decks',      
+    'hooks',
+    'jokers',
+    'planets',
+    'spectrals',
+    'tags',
+    'vouchers'
 }
 
 for _, f in ipairs(files) do
@@ -24,47 +24,74 @@ end
 
 function mod.process_loc_text()
     local D = G.localization.descriptions
-    D.Back.b_black.text = {
-        "{C:attention}+1{} Joker slot",
-        "{C:red}-1{} discard",
-        "every round",
-    }
-    D.Back.b_nebula.text = {
-        "Open a free {C:planet}Celestial{}",
-        "pack at the end",
-        "of every shop",
-    }
 
-    D.Spectral.c_ouija.text = {
-        "Converts all cards",
-        "in hand to a single",
-        "random {C:attention}rank",
-        "{C:red}-1{} discard",
-    }
+    if D.Back and D.Back.b_black then
+        D.Back.b_black.text = {
+            "{C:attention}+1{} Joker slot",
+            "{C:red}-1{} discard",
+            "every round",
+        }
+    end
 
-    D.Joker.j_troubadour.text = {
-        "{C:attention}+#1#{} hand size,",
-        "{C:red}-#2#{} discard",
-    }
+    if D.Back and D.Back.b_nebula then
+        D.Back.b_nebula.text = {
+            "Open a free {C:planet}Celestial{}",
+            "pack at the end",
+            "of every shop",
+        }
+    end
 
-    D.Voucher.v_hieroglyph.text = {
-        "{C:attention}-#1#{} Ante",
-        "{C:red}-#1#{} discard",
-        "each round",
-    }
+    if D.Spectral and D.Spectral.c_ouija then
+        D.Spectral.c_ouija.text = {
+            "Converts all cards",
+            "in hand to a single",
+            "random {C:attention}rank",
+            "{C:red}-1{} discard",
+        }
+    end
 
-    D.Voucher.v_seed_money.text = {
-        "Raise the cap on",
-        "interest earned per",
-        "round by {C:money}$5",
-    }
-    D.Voucher.v_money_tree.text = {
-        "Raise the cap on",
-        "interest earned per",
-        "round by {C:money}$10",
-    }
+    if D.Joker and D.Joker.j_idol then
+        D.Joker.j_idol.text = {
+            "This Joker gains {X:mult,C:white}X0.1{} Mult",
+            "when a",
+            "{C:attention}#2#{} of {V:1}#3#{} is scored",
+            "{C:inactive}(Currently {X:mult,C:white}X#1#{C:inactive})",
+            "card changes every round",
+        }
+    end
 
-    if D.Voucher.v_planet_merchant then
+    if D.Joker and D.Joker.j_troubadour then
+        D.Joker.j_troubadour.text = {
+            "{C:attention}+#1#{} hand size,",
+            "{C:red}-#2#{} discard",
+        }
+    end
+
+    if D.Voucher and D.Voucher.v_hieroglyph then
+        D.Voucher.v_hieroglyph.text = {
+            "{C:attention}-#1#{} Ante",
+            "{C:red}-#1#{} discard",
+            "each round",
+        }
+    end
+
+    if D.Voucher and D.Voucher.v_seed_money then
+        D.Voucher.v_seed_money.text = {
+            "Raise the cap on",
+            "interest earned per",
+            "round by {C:money}$5",
+        }
+    end
+
+    if D.Voucher and D.Voucher.v_money_tree then
+        D.Voucher.v_money_tree.text = {
+            "Raise the cap on",
+            "interest earned per",
+            "round by {C:money}$10",
+        }
+    end
+
+    if D.Voucher and D.Voucher.v_planet_merchant then
         D.Voucher.v_planet_merchant.text = {
             "{C:planet}Planet{} cards appear",
             "{C:attention}#1#X{} more frequently",
@@ -72,7 +99,8 @@ function mod.process_loc_text()
             "{C:money}-$1{} {C:planet}Planet{} & {C:planet}Celestial{} cost",
         }
     end
-    if D.Voucher.v_planet_tycoon then
+
+    if D.Voucher and D.Voucher.v_planet_tycoon then
         D.Voucher.v_planet_tycoon.text = {
             "{C:planet}Planet{} cards appear",
             "{C:attention}#1#X{} more frequently",
@@ -81,7 +109,7 @@ function mod.process_loc_text()
         }
     end
 
-    if D.Voucher.v_tarot_merchant then
+    if D.Voucher and D.Voucher.v_tarot_merchant then
         D.Voucher.v_tarot_merchant.text = {
             "{C:tarot}Tarot{} cards appear",
             "{C:attention}#1#X{} more frequently",
@@ -89,8 +117,8 @@ function mod.process_loc_text()
             "{C:money}-$1{} {C:tarot}Tarot{} & {C:tarot}Arcana{} cost",
         }
     end
-	
-    if D.Voucher.v_tarot_tycoon then
+    
+    if D.Voucher and D.Voucher.v_tarot_tycoon then
         D.Voucher.v_tarot_tycoon.text = {
             "{C:tarot}Tarot{} cards appear",
             "{C:attention}#1#X{} more frequently",
@@ -99,22 +127,21 @@ function mod.process_loc_text()
         }
     end
 
-if D.Voucher.v_hone then
+    if D.Voucher and D.Voucher.v_hone then
         D.Voucher.v_hone.text = {
-                    "{C:dark_edition}Foil{}, {C:dark_edition}Holographic{},",
-                    "{C:dark_edition}Polychrome{}, and {C:dark_edition}Negative{} cards",
-                    "appear {C:attention}#1#X{} more often",
+            "{C:dark_edition}Foil{}, {C:dark_edition}Holographic{},",
+            "{C:dark_edition}Polychrome{}, and {C:dark_edition}Negative{} cards",
+            "appear {C:attention}#1#X{} more often",
         }
     end
 
-if D.Voucher.v_glow_up then
+    if D.Voucher and D.Voucher.v_glow_up then
         D.Voucher.v_glow_up.text = {
-                    "{C:dark_edition}Foil{}, {C:dark_edition}Holographic{},",
-                    "{C:dark_edition}Polychrome{}, and {C:dark_edition}Negative{} cards",
-                    "appear {C:attention}#1#X{} more often",
+            "{C:dark_edition}Foil{}, {C:dark_edition}Holographic{},",
+            "{C:dark_edition}Polychrome{}, and {C:dark_edition}Negative{} cards",
+            "appear {C:attention}#1#X{} more often",
         }
     end
-
 
     if D.Stake and D.Stake.stake_blue then
         D.Stake.stake_blue.text = {
@@ -124,7 +151,7 @@ if D.Voucher.v_glow_up then
         }
     end
 
-    if D.Voucher.v_magic_trick then
+    if D.Voucher and D.Voucher.v_magic_trick then
         D.Voucher.v_magic_trick.text = {
             "{C:attention}+1{} card slot available in shop",
             "{C:attention}Playing cards{} can",
@@ -132,12 +159,12 @@ if D.Voucher.v_glow_up then
         }
     end
 
-    if D.Voucher.v_illusion then
+    if D.Voucher and D.Voucher.v_illusion then
         D.Voucher.v_illusion.text = {
             "{C:attention}Playing cards{} in shop",
             "may have an {C:dark_edition}edition{}",
             "an {C:attention}enhancement",
-	    "and a {C:attention}seal",
+            "and a {C:attention}seal",
         }
     end
 
@@ -149,47 +176,48 @@ if D.Voucher.v_glow_up then
         }
     end
 
-    if D.Joker.j_bloodstone then
+    if D.Joker and D.Joker.j_bloodstone then
         D.Joker.j_bloodstone.text = {
-            "{C:green}1 in 2{} chance for",
+            "{C:green}1 in 3{} chance for",
             "scored cards with",
             "{C:hearts}Heart{} suit to gain",
             "a {C:red}Red Seal",
         }
     end
 
-    if D.Joker.j_dna then
+    if D.Joker and D.Joker.j_dna then
         D.Joker.j_dna.text = {
             "Add a permanent copy of the",
             "{C:attention}first scored{} card",
-	    "in the {C:attention}first hand{} of round",
+            "in the {C:attention}first hand{} of round",
             "to deck and draw it to {C:attention}hand",
         }
     end
 
-    if D.Joker.j_satellite then
+    if D.Joker and D.Joker.j_satellite then
         D.Joker.j_satellite.text = {
-                    "Earn {C:money}$#2#{} at end of round",
-                    "Payout increases by {C:money}$#1#{}",
-                    "per unique {C:planet}Planet{}",
-		    "card used this run",
+            "Earn {C:money}$#2#{} at end of round",
+            "Payout increases by {C:money}$#1#{}",
+            "per unique {C:planet}Planet{}",
+            "card used this run",
         }
     end
 
-    if D.Joker.j_swashbuckler then
+    if D.Joker and D.Joker.j_swashbuckler then
         D.Joker.j_swashbuckler.text = {
             "Adds the sell value of",
             "all owned {C:attention}Jokers{} and",
             "held {C:attention}consumables{} to Mult",
             "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
         }
-	end
-	if D.Joker.j_throwback then
-       	 D.Joker.j_throwback.text = {
-                    "{X:mult,C:white} X#1# {} Mult for each",
-                    "{C:attention}Tag{} gained this run",
-                    "{C:inactive}(Currently {X:mult,C:white} X#2# {C:inactive} Mult)",
-		}
+    end
+
+    if D.Joker and D.Joker.j_throwback then
+         D.Joker.j_throwback.text = {
+            "{X:mult,C:white} X#1# {} Mult for each",
+            "{C:attention}Tag{} gained this run",
+            "{C:inactive}(Currently {X:mult,C:white} X#2# {C:inactive} Mult)",
+        }
     end
 
     if D.Spectral and D.Spectral.c_black_hole then
@@ -220,5 +248,5 @@ if D.Voucher.v_glow_up then
             "Gives a free",
             "{C:spectral}Jumbo Spectral Pack",
         }
-   		 end
-	end
+    end
+end
