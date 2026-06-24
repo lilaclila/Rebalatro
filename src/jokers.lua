@@ -24,16 +24,6 @@ SMODS.Joker:take_ownership('j_mail', {
 SMODS.Joker:take_ownership('j_idol', {
 	perishable_compat = false,
     config = {extra = 0.1, x_mult = 1},
-	loc_txt = {
-        name = 'The Idol',
-        text = {
-            "This Joker gains {X:mult,C:white} X#1# {} Mult",
-            "each time a played {C:attention}#3#",
-            "of {V:1}#4#{} is scored",
-            "{C:inactive}(Currently {X:mult,C:white} X#2# {C:inactive} Mult)",
-            "{s:0.8}Card changes every round"
-        }
-    },
     loc_vars = function(self, info_queue, card)
         local rank = 'Ace'
         local suit = 'Spades'
@@ -74,18 +64,7 @@ SMODS.Joker:take_ownership('j_idol', {
     end
 }, true)
 
-SMODS.Joker:take_ownership('j_to_the_moon', {
-    loc_txt = {
-        name = 'To the Moon',
-        text = {
-            "Earn an extra {C:money}$#1#{} of",
-            "{C:attention}interest{} for every {C:money}$5{} you",
-            "have at end of round.",
-            "Increase cap on interest earned",
-	    "per round by {C:money}$2{}"
-        }
-    },
-    
+SMODS.Joker:take_ownership('j_to_the_moon', {  
     loc_vars = function(self, info_queue, card)
         local interest_val = (type(card.ability.extra) == 'table' and card.ability.extra.interest) or 1
         return { vars = { interest_val, 10 } }
@@ -158,16 +137,6 @@ SMODS.Joker:take_ownership('j_troubadour', {
 
 SMODS.Joker:take_ownership('j_bloodstone', {
     config = { extra = { odds = 3 } },
-    loc_txt = {
-        name = 'Bloodstone',
-        text = {
-            "{C:green}#1# in #2#{} chance for",
-            "played cards with",
-            "{C:hearts}Heart{} suit to gain a",
-            "{C:red}Red Seal{} when scored"
-        }
-    },
-    
     loc_vars = function(self, info_queue, card)
         local odds = card.ability.extra.odds or 3
         return { vars = { ''..(G.GAME and G.GAME.probabilities.normal or 1), odds } }
