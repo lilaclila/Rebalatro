@@ -110,3 +110,11 @@ pattern = "level_up_hand(self, k, true)"
 position = "at"
 payload = "level_up_hand(self, k, true, 3)"
 match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "ease_dollars(-G.GAME.dollars, true)"
+position = "at"
+payload = "ease_dollars(-math.floor(math.max(0, G.GAME.dollars) / 2), true)"
+match_indent = true
