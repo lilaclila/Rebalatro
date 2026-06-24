@@ -108,17 +108,6 @@
           "per round by {C:money}$2{}"
         ]
       },
-      "j_ceremonial": {
-        "name": "Ceremonial Dagger",
-        "text": [
-          "When {C:attention}Blind{} is selected,",
-          "destroys Joker to the right",
-          "and permanently adds {C:attention}1.5X{}",
-          "its sell value to this {C:mult}Mult{}",
-          "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)"
-        ]
-      }
-    },
     "Voucher": {
       "v_hieroglyph": {
         "text": [
