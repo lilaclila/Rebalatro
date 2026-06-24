@@ -328,3 +328,56 @@ if Card and Card.calculate_joker then
         return ret
     end
 end
+
+local _create_card = create_card
+function create_card(_type, area, legendary, _rarity, skip_materialize, soulable, forced_key, key_append)
+    local card = _create_card(_type, area, legendary, _rarity, skip_materialize, soulable, forced_key, key_append)
+    
+    if key_append == 'blusl' and card and type(card) == 'table' then
+        card.vanilla_blue_seal_trash = true
+    end
+    
+    return card
+end
+
+local _emplace = CardArea.emplace
+function CardArea.emplace(self, card, location, stay_flipped)
+    if card and type(card) == 'table' and card.vanilla_blue_seal_trash then
+        card:remove()
+        return 
+    end
+    _emplace(self, card, location, stay_flipped)
+end
+
+SMODS.Seals.Blue.calculate = function(self, card, context)
+    if context.playing_card_end_of_round and context.cardarea == G.hand then
+        
+        G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+        
+        G.E_MANAGER:add_event(Event({
+            trigger = 'before',
+            delay = 0.0,
+            func = function()
+                
+                local valid_planets = {}
+                for _, p_center in pairs(G.P_CENTER_POOLS.Planet) do
+                    if not p_center.config.hand_type or (G.GAME.hands[p_center.config.hand_type] and G.GAME.hands[p_center.config.hand_type].visible) then
+                        valid_planets[#valid_planets + 1] = p_center.key
+                    end
+                end
+                
+                local forced_planet = pseudorandom_element(valid_planets, pseudoseed('blusl_rng'))
+
+                local consumable = create_card('Planet', G.consumeables, nil, nil, nil, nil, forced_planet, 'blusl_custom')
+                
+                consumable:set_edition({negative = true}, true)
+                consumable:add_to_deck()
+                G.consumeables:emplace(consumable)
+                G.GAME.consumeable_buffer = 0
+                return true
+            end
+        }))
+        
+        return { message = localize('k_plus_planet'), colour = G.C.SECONDARY_SET.Planet }
+    end
+end
