@@ -107,7 +107,8 @@
           "Increase cap on interest earned",
           "per round by {C:money}$2{}"
         ]
-      },
+      }
+    },
     "Voucher": {
       "v_hieroglyph": {
         "text": [
@@ -190,6 +191,7 @@
           "an {C:attention}enhancement{},",
           "and a {C:attention}seal{}"
         ]
+      }
     },
     "Stake": {
       "stake_blue": {
@@ -237,17 +239,16 @@
         ]
       }
     },
-	"Other": {
-     	 "blue_seal": {
-     	 "name": "Blue Seal",
-       	 "text": [
-         "Creates a random",
-         "{C:dark_edition}Negative{} {C:planet}Planet{} card",
-         "if held in hand at",
-         "end of round"
+    "Other": {
+      "blue_seal": {
+        "name": "Blue Seal",
+        "text": [
+          "Creates a random",
+          "{C:dark_edition}Negative{} {C:planet}Planet{} card",
+          "if held in hand at",
+          "end of round"
         ]
-	 	}
-  	 	 }
-	  }
-	}
+      }
+    }
   }
+}
