@@ -74,6 +74,10 @@ THIS MOD REQUIRES STEAMODDED AND LOVELY!
 
 - Changed Satellite - now starts at $2 a round, still scaling by +$1 for every unique planet card used this run 
 
+UPCOMING CHANGES:
+- Wraith halves your money instead of setting to $0
+- Dagger scales equal to 1.5x sell value as mult, rather than 2x
+
 KNOWN BUGS:
 - Big Blind and Boss Blind displayed $ Reward is incorrect at Red Stake+ in the Blind Select or Run Info -> Blinds screen
 - Initial hands and discards are incorrect at Blue Stake+
