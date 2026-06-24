@@ -3,7 +3,7 @@ THIS MOD REQUIRES STEAMODDED AND LOVELY!
 - Changed Wraith - Now halves your money instead of setting it to $0
 - Changed Blue Stake - Now gives +1 discard and -1 hands, was -1 discard
 - Changed Red Stake - Big Blind and Boss Blind reward money is reduced by $1
-- Changed Perishable sticker - Jokers with this sticker no longer have a reduced sell price relative to their base cost (still debuffed after 5 rounds)
+- Changed Perishable sticker - Jokers with this sticker no longer have a reduced sell price relative to their base cost once they have perished.
 - Changed Black Deck - Now gives -1 discard, was -1 hands
 - Changed Nebula Deck:
     - no longer has -1 consumable slot
@@ -37,10 +37,6 @@ THIS MOD REQUIRES STEAMODDED AND LOVELY!
 - Changed Swashbuckler - Now also counts its own sell value and the sell value of consumables to Mult
 - Changed DNA - Now copies the first card scored in the first played hand of the round, rather than just the first card played
 - Changed Satellite - now starts at $2 a round, still scaling by +$1 for every unique planet card used this run 
-
-UPCOMING CHANGES:
-- Wraith halves your money instead of setting to $0
-- Dagger scales equal to 1.5x sell value as mult, rather than 2x
 
 KNOWN BUGS:
 - Big Blind and Boss Blind displayed $ Reward is incorrect at Red Stake+ in the Blind Select or Run Info -> Blinds screen
