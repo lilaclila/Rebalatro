@@ -31,11 +31,4 @@ end}))
         return true 
 end}))
 end
-	G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.2, func = function()
-	G.GAME.round_resets.discards = G.GAME.round_resets.discards - 1
-	ease_discard(-1)
-	return true
-end}))
-end
 }, true)
-
