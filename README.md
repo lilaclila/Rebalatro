@@ -2,7 +2,7 @@ THIS MOD REQUIRES STEAMODDED AND LOVELY!
 - Changed Blue Seal - Now gives a random negative planet which is unaffected by blocking
 - Changed Wraith - Now halves your money instead of setting it to $0
 - Changed Blue Stake - Now gives +1 discard and -1 hands, was -1 discard
-- Changed Red Stake - Big Blind and Boss Blind reward money is reduced by $1
+- Changed Red Stake - Blind reward money is reduced by $1
 - Changed Perishable sticker - Jokers with this sticker no longer have a reduced sell price relative to their base cost once they have perished.
 - Changed Black Deck - Now gives -1 discard, was -1 hands
 - Changed Nebula Deck:
