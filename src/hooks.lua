@@ -6,20 +6,44 @@ if Blind and Blind.set_blind then
             if G.GAME.modifiers and G.GAME.modifiers.no_blind_reward then
                 G.GAME.modifiers.no_blind_reward.Small = nil
             end
+            
             local t = self.get_type and self:get_type()
-            local disp = self.dollars or 0
             if t == 'Small' then
                 self.dollars = (blind and blind.dollars) or self.dollars or 0
-                disp = self.dollars
-            elseif t == 'Big' or t == 'Boss' then
-                disp = math.max(0, (self.dollars or 0) - 1)
             end
+            
+            self.dollars = math.max(0, (self.dollars or 0) - 1)
+            
             if G.GAME.current_round then
                 G.GAME.current_round.dollars_to_be_earned =
-                    disp > 0 and (string.rep(localize('$'), disp) .. '') or ''
+                    self.dollars > 0 and (string.rep(localize('$'), self.dollars) .. '') or ''
             end
         end
     end
+end
+
+local function apply_red_stake_blinds()
+    if not G.GAME then return end
+    
+    for key, blind in pairs(G.P_BLINDS) do
+        blind.og_dollars = blind.og_dollars or blind.dollars
+        
+        if (G.GAME.stake or 1) >= 2 then
+            blind.dollars = math.max(0, blind.og_dollars - 1)
+        else
+            blind.dollars = blind.og_dollars
+        end
+    end
+    
+    if G.GAME.modifiers and type(G.GAME.modifiers.no_blind_reward) == 'table' then
+        G.GAME.modifiers.no_blind_reward.Small = nil
+    end
+end
+
+local _start_run = Game.start_run
+function Game:start_run(args)
+    _start_run(self, args)
+    apply_red_stake_blinds()
 end
 
 if Card and Card.set_cost then

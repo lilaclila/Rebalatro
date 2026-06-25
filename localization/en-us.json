@@ -201,11 +201,11 @@
           "{s:0.8}Applies all previous Stakes{}"
         ]
       },
-      "stake_red": {
+	"stake_red": {
         "text": [
-          "{C:money}-$1{} {C:attention}Big Blind{} &",
-          "{C:attention}Boss Blind{} reward",
-          "{s:0.8}Applies all previous Stakes{}"
+	"{C:attention}Blind{} rewards",
+	"reduced by {C:money}$1{}",
+        "{s:0.8}Applies all previous Stakes{}"
         ]
       }
     },
