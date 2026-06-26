@@ -123,17 +123,7 @@ SMODS.Joker:take_ownership('j_hit_the_road', { perishable_compat = false }, true
 SMODS.Joker:take_ownership('j_campfire', { perishable_compat = false }, true)
 
 SMODS.Joker:take_ownership('j_troubadour', {
-    config = {extra = {h_size = 3, h_plays = -1}},
-    add_to_deck = function(self, card)
-        G.hand:change_size(card.ability.extra.h_size)
-        G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.h_plays
-        ease_hands_played(card.ability.extra.h_plays)
-    end,
-    remove_from_deck = function(self, card)
-        G.hand:change_size(-card.ability.extra.h_size)
-        G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.h_plays
-        ease_hands_played(-card.ability.extra.h_plays)
-    end
+    config = {extra = {h_size = 3, h_plays = -1}}
 }, true)
 
 SMODS.Joker:take_ownership('j_bloodstone', {
