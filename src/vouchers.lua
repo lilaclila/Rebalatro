@@ -16,7 +16,7 @@ ease_ante(-card.ability.extra)
 G.GAME.round_resets.blind_ante = G.GAME.round_resets.blind_ante or G.GAME.round_resets.ante
 G.GAME.round_resets.blind_ante = G.GAME.round_resets.blind_ante - card.ability.extra
 G.GAME.round_resets.discards = G.GAME.round_resets.discards - card.ability.extra
-ease_discard(-card.ability.extra)
+ease_discard(-2)
 end
 }, true)
 

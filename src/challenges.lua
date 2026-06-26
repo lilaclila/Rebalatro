@@ -1,4 +1,3 @@
-
 if G.CHALLENGES then
     for _, ch in ipairs(G.CHALLENGES) do
         if ch.id == 'c_golden_needle_1' then

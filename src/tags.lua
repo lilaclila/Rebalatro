@@ -96,7 +96,7 @@ SMODS.Tag {
             local lock = tag.ID
             G.CONTROLLER.locks[lock] = true
             tag.triggered = true
-            local key = 'p_celestial_normal_1'
+            local key = 'p_celestial_mega_1'
             local card = Card(
                 G.play.T.x + G.play.T.w/2 - G.CARD_W*1.27/2,
                 G.play.T.y + G.play.T.h/2-G.CARD_H*1.27/2, 
@@ -117,3 +117,6 @@ SMODS.Tag {
         end
     end
 }
+SMODS.Tag:take_ownership('tag_investment', {
+    config = {type = 'eval', dollars = 20}
+}, true)

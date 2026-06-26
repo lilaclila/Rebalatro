@@ -1,6 +1,6 @@
 
 SMODS.Joker:take_ownership('j_mail', {
-    config = {extra = 3},
+    config = {extra = 2},
     loc_vars = function(self, info_queue, card)
         local rank = 'Ace'
         if G.GAME and G.GAME.current_round and G.GAME.current_round.mail_card then
@@ -123,16 +123,7 @@ SMODS.Joker:take_ownership('j_hit_the_road', { perishable_compat = false }, true
 SMODS.Joker:take_ownership('j_campfire', { perishable_compat = false }, true)
 
 SMODS.Joker:take_ownership('j_troubadour', {
-    add_to_deck = function(self, card)
-        G.hand:change_size(2)
-        G.GAME.round_resets.discards = G.GAME.round_resets.discards - 1
-        ease_discard(-1)
-    end,
-    remove_from_deck = function(self, card)
-        G.hand:change_size(-2)
-        G.GAME.round_resets.discards = G.GAME.round_resets.discards + 1
-        ease_discard(1)
-    end
+    config = {extra = {h_size = 3, h_plays = -1}}
 }, true)
 
 SMODS.Joker:take_ownership('j_bloodstone', {
@@ -253,4 +244,152 @@ SMODS.Joker:take_ownership('j_swashbuckler', {
             end
         end
     end
+}, true)
+
+SMODS.Joker:take_ownership('j_yorick', {
+    config = {extra = {xmult = 1, discards = 51}},
+    loc_vars = function(self, info_queue, card)
+        return {vars = {card.ability.extra.xmult, card.ability.extra.discards, card.ability.yorick_discards, card.ability.x_mult}}
+    end
+}, true)
+
+
+SMODS.Joker:take_ownership('j_greedy_joker', {
+    config = { extra = { s_mult = 4, suit = 'Diamonds' } }
+}, true)
+
+SMODS.Joker:take_ownership('j_lusty_joker', {
+    config = { extra = { s_mult = 4, suit = 'Hearts' } }
+}, true)
+
+SMODS.Joker:take_ownership('j_wrathful_joker', {
+    config = { extra = { s_mult = 4, suit = 'Spades' } }
+}, true)
+
+SMODS.Joker:take_ownership('j_gluttenous_joker', {
+    config = { extra = { s_mult = 4, suit = 'Clubs' } }
+}, true)
+
+SMODS.Joker:take_ownership('j_flower_pot', {
+    calculate = function(self, card, context)
+        if context.joker_main then
+            local suits = {
+                ['Hearts'] = 0,
+                ['Diamonds'] = 0,
+                ['Spades'] = 0,
+                ['Clubs'] = 0
+            }
+            local unique_suits = 0
+            
+            for i = 1, #context.scoring_hand do
+                if not SMODS.has_any_suit(context.scoring_hand[i]) then
+                    if context.scoring_hand[i]:is_suit('Hearts', nil, true) and suits["Hearts"] == 0 then
+                        suits["Hearts"] = 1
+                        unique_suits = unique_suits + 1
+                    elseif context.scoring_hand[i]:is_suit('Diamonds', nil, true) and suits["Diamonds"] == 0 then
+                        suits["Diamonds"] = 1
+                        unique_suits = unique_suits + 1
+                    elseif context.scoring_hand[i]:is_suit('Spades', nil, true) and suits["Spades"] == 0 then
+                        suits["Spades"] = 1
+                        unique_suits = unique_suits + 1
+                    elseif context.scoring_hand[i]:is_suit('Clubs', nil, true) and suits["Clubs"] == 0 then
+                        suits["Clubs"] = 1
+                        unique_suits = unique_suits + 1
+                    end
+                end
+            end
+            for i = 1, #context.scoring_hand do
+                if SMODS.has_any_suit(context.scoring_hand[i]) then
+                    if context.scoring_hand[i]:is_suit('Hearts', nil, true) and suits["Hearts"] == 0 then
+                        suits["Hearts"] = 1
+                        unique_suits = unique_suits + 1
+                    elseif context.scoring_hand[i]:is_suit('Diamonds', nil, true) and suits["Diamonds"] == 0 then
+                        suits["Diamonds"] = 1
+                        unique_suits = unique_suits + 1
+                    elseif context.scoring_hand[i]:is_suit('Spades', nil, true) and suits["Spades"] == 0 then
+                        suits["Spades"] = 1
+                        unique_suits = unique_suits + 1
+                    elseif context.scoring_hand[i]:is_suit('Clubs', nil, true) and suits["Clubs"] == 0 then
+                        suits["Clubs"] = 1
+                        unique_suits = unique_suits + 1
+                    end
+                end
+            end
+            
+            if unique_suits >= 3 then
+                local xmult = type(card.ability.extra) == 'table' and card.ability.extra.Xmult or card.ability.extra
+                return {
+                    message = localize{type='variable',key='a_xmult',vars={xmult}},
+                    Xmult_mod = xmult
+                }
+            end
+        end
+    end
+}, true)
+
+SMODS.Joker:take_ownership('j_trading', {
+    config = { extra = 1 }
+}, true)
+
+SMODS.Joker:take_ownership('j_sixth_sense', {
+    calculate = function(self, card, context)
+        if context.before then
+            card.ability.extra = card.ability.extra or {}
+            card.ability.extra.sixth_sense_target = nil
+        end
+        if context.individual and context.cardarea == G.play then
+            card.ability.extra = card.ability.extra or {}
+            if not card.ability.extra.sixth_sense_target and G.GAME.current_round.hands_played == 0 then
+                card.ability.extra.sixth_sense_target = context.other_card
+            end
+        end
+        if context.destroy_card and not context.blueprint then
+            card.ability.extra = card.ability.extra or {}
+            if context.destroy_card == card.ability.extra.sixth_sense_target and context.destroy_card:get_id() == 6 and G.GAME.current_round.hands_played == 0 then
+                if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+                    G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+                    G.E_MANAGER:add_event(Event({
+                        func = (function()
+                            SMODS.add_card {
+                                set = 'Spectral',
+                                key_append = 'vremade_sixth_sense'
+                            }
+                            G.GAME.consumeable_buffer = 0
+                            return true
+                        end)
+                    }))
+                    return {
+                        message = localize('k_plus_spectral'),
+                        colour = G.C.SECONDARY_SET.Spectral,
+                        remove = true
+                    }
+                end
+                return {
+                    remove = true
+                }
+            end
+        end
+    end
+}, true)
+
+SMODS.Joker:take_ownership('j_hanging_chad', {
+    config = {extra = 1},
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra } }
+    end,
+    calculate = function(self, card, context)
+        if context.repetition and context.cardarea == G.play then
+            if context.other_card == context.scoring_hand[1] or context.other_card == context.scoring_hand[2] then
+                return {
+                    message = localize('k_again_ex'),
+                    repetitions = card.ability.extra,
+                    card = card
+                }
+            end
+        end
+    end
+}, true)
+
+SMODS.Joker:take_ownership('j_faceless', {
+    config = {extra = {dollars = 4, faces = 3}}
 }, true)

@@ -1,3 +1,6 @@
 SMODS.PokerHand:take_ownership('Flush',          { l_chips = 20 }, true)
 SMODS.PokerHand:take_ownership('Full House',     { l_chips = 30 }, true)
 SMODS.PokerHand:take_ownership('Five of a Kind', { l_chips = 40 }, true)
+SMODS.PokerHand:take_ownership('High Card', 	 { l_mult = 1, l_chips = 5 }, true)
+SMODS.PokerHand:take_ownership('Pair',		 { l_mult = 1, l_chips = 10 }, true)
+SMODS.PokerHand:take_ownership('Three of a Kind',{ l_mult = 3, l_chips = 5 }, true)
