@@ -249,10 +249,10 @@ if type(poll_edition) == 'function' then
         local edition_poll = pseudorandom(pseudoseed(_key or 'edition_generic'))
         local rate = (G.GAME and G.GAME.edition_rate) or 1
         
-        local threshold_mod = _guaranteed and 1 or (rate * _mod)
+        local threshold_mod = _guaranteed and 25 or (rate * _mod)
         
         if edition_poll > 1 - 0.003 * threshold_mod and not _no_neg then return { negative = true }
-        elseif edition_poll > 1 - 0.003 * threshold_mod then return { polychrome = true }
+        elseif edition_poll > 1 - 0.006 * threshold_mod then return { polychrome = true }
         elseif edition_poll > 1 - 0.02 * threshold_mod then return { holo = true }
         elseif edition_poll > 1 - 0.04 * threshold_mod then return { foil = true }
         end
