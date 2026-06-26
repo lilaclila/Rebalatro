@@ -26,5 +26,5 @@ SMODS.Back:take_ownership('b_nebula', {
 }, true)
 
 SMODS.Back:take_ownership('b_zodiac', {
-    config = {vouchers = {'v_tarot_merchant', 'v_planet_merchant'}},
+    config = {vouchers = {'v_overstock_norm', 'v_overstock_plus'}},
 }, true)
