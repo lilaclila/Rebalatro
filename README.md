@@ -18,6 +18,9 @@ THIS MOD REQUIRES STEAMODDED AND LOVELY!
 * Buffed Jupiter - Now gives +20 chips instead of +15 chips
 * Buffed Earth - Now gives +30 chips instead of +25 chips
 * Buffed Planet X - Now gives +40 chips instead of +35 chips for Five of a Kind
+* Nerfed Mercury - Now gives +10 chips instead of +15
+* Nerfed Pluto - Now gives +5 chips instead of +10
+* Changed Venus - Now gives +3 Mult and +5 Chips
 * Buffed Black Hole - Now levels up each poker hand 3 times
 * Changed Ouija - Now -1 discards, was -1 hand size
 * Changed Hieroglyph - Now -1 discards instead of -1 hands
