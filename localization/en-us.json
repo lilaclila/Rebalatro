@@ -19,8 +19,8 @@
         "text": [
           "Jokers no longer",
 	  "appear in the {C:attention}shop{},",
-          "start with {C:attention}Overstock{}",
-          "and {C:attention}Overstock Plus{}"
+          "start with {C:tarot,T:v_tarot_merchant}Tarot Merchant{}",
+          "and {C:planet,T:v_planet_merchant}Planet Merchant{}"
         ]
       }
     },
