@@ -1,6 +1,7 @@
 THIS MOD REQUIRES STEAMODDED AND LOVELY!
 
 * Changed Blue Seal - Blue seal is now removed ("Scraped") from the card after 3 triggers
+* Changed Red Seal - now also retriggers the following discard effects: Ramen, Yorick, Mail-In Rebate, Castle, and Hit the Road
 * Changed Wraith - Now halves your money instead of setting it to $0
 * Changed Blue Stake - Now gives +1 discard and -1 hands, was -1 discard
 * Changed Red Stake - Blind reward money is reduced by $1
