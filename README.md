@@ -28,6 +28,7 @@ THIS MOD REQUIRES STEAMODDED AND LOVELY!
 * Changed Illusion - Now allows playing cards in the shop to spawn with seals, and is affected by Hone and Glow Up
 * Changed Hone and Glow Up - Now increases the Negative edition rate by 2X/4X respectively, instead of X3 and X7 Polychrome rate
 * Buffed Merchant and Tycoon vouchers - Now additionally reduces their respective pack and card costs by $1
+* Changed Observatory - Planet cards now give +2 levels instead of +1
 * Changed Seed Money - Now increases the cap on interest earned in each round by $5
 * Changed Money Tree - Now increases the cap on interest earned in each round by $10
 * Changed Seed Money, Money Tree, and To The Moon to allow Green Deck to earn interest
