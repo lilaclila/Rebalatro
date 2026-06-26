@@ -47,6 +47,7 @@ THIS MOD REQUIRES STEAMODDED AND LOVELY!
 * Changed DNA - Now copies the first card scored in the first played hand of the round, rather than just the first card played
 * Changed Sixth Sense - Now destroys the first card scored in the first played hand of the round if it is a 6
 * Trading Card -> Gives $1 instead of $3
+* Sin Jokers now give +4 mult instead of +3
 * Changed Satellite - now starts at $2 a round, still scaling by +$1 for every unique planet card used this run
 * Changed Hanging Chad - retriggers the first two cards scored once insted of the first card twice
 
