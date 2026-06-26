@@ -216,6 +216,10 @@ if Back and Back.apply_to_run then
             end
             G.GAME.interest_cap = 0 
         end
+        if self.effect and self.effect.center and self.effect.center.key == 'b_zodiac' then
+            G.GAME.modifiers.bram_poker = true
+            G.GAME.joker_rate = 0
+        end
     end
 end
 
@@ -256,29 +260,9 @@ if type(poll_edition) == 'function' then
     end
 end
 
-SMODS.Seals.Blue.calculate = function(self, card, context)
-    if context.individual and context.cardarea == G.play then
-        if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-            
-            G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
-            
-            G.E_MANAGER:add_event(Event({
-                trigger = 'before',
-                delay = 0.0,
-                func = function()
-                    local consumable = create_card('Planet', G.consumeables, nil, nil, nil, nil, nil, 'blusl')
-                    consumable:add_to_deck()
-                    G.consumeables:emplace(consumable)
-                    G.GAME.consumeable_buffer = 0
-                    return true
-                end
-            }))
-            
-            return {
-                message = localize('k_plus_planet'),
-                colour = G.C.SECONDARY_SET.Planet,
-                card = card
-            }
-        end
-    end
+SMODS.Seals.Blue.loc_vars = function(self, info_queue, card)
+    local triggers = card and card.ability and card.ability.blue_seal_triggers or 0
+    return { vars = { math.max(0, 3 - triggers) } }
 end
+
+

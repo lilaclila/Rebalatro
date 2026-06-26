@@ -10,9 +10,17 @@
       },
       "b_nebula": {
         "text": [
-          "Open a free {C:planet}Celestial{}",
-          "pack at the end",
-          "of every shop"
+          "Open a free {C:planet}Mega Celestial{}",
+          "pack after exiting the",
+          "first shop of each Ante"
+        ]
+      },
+      "b_zodiac": {
+        "text": [
+          "Jokers no longer",
+	  "appear in the {C:attention}shop{},",
+          "start with {C:attention}Overstock{}",
+          "and {C:attention}Overstock Plus{}"
         ]
       }
     },
@@ -39,6 +47,14 @@
           "{C:rare}Rare{} {C:attention}Joker{},",
           "{C:red}Halves{} your {C:money}money"
         ]
+      },
+      "c_immolate": {
+        "name": "Immolate",
+        "text": [
+          "Destroys {C:attention}5{} random",
+          "cards in hand, gain {C:money}$20{}",
+          "and destroy a random {C:attention}Joker{}"
+        ]
       }
     },
     "Joker": {
@@ -55,7 +71,7 @@
       "j_troubadour": {
         "text": [
           "{C:attention}+#1#{} hand size,",
-          "{C:red}-#2#{} discard"
+          "{C:blue}-#2#{} hand"
         ]
       },
       "j_bloodstone": {
@@ -107,13 +123,38 @@
           "Increase cap on interest earned",
           "per round by {C:money}$2{}"
         ]
+      },
+      "j_hanging_chad": {
+        "name": "Hanging Chad",
+        "text": [
+          "Retrigger the {C:attention}first two{} played",
+          "cards used in scoring",
+          "{C:attention}#1#{} additional time"
+        ]
+      },
+      "j_sixth_sense": {
+        "name": "Sixth Sense",
+        "text": [
+          "If the {C:attention}first scored card{} in the",
+          "{C:attention}first hand{} of round is a {C:attention}6{}, destroy it",
+          "and create a {C:spectral}Spectral{} card",
+          "{C:inactive}(Must have room)"
+        ]
+      },
+      "j_flower_pot": {
+        "name": "Flower Pot",
+        "text": [
+          "{X:mult,C:white} X#1# {} Mult if poker hand",
+          "contains at least {C:attention}3{}",
+          "cards with a unique {C:attention}suit{}"
+        ]
       }
     },
     "Voucher": {
       "v_hieroglyph": {
         "text": [
           "{C:attention}-#1#{} Ante",
-          "{C:red}-#1#{} discard",
+          "{C:red}-2{} discards",
           "each round"
         ]
       },
@@ -134,32 +175,32 @@
       "v_planet_merchant": {
         "text": [
           "{C:planet}Planet{} cards appear",
-          "{C:attention}#1#X{} more frequently",
-          "in the shop",
+          "{C:attention}2X{} more frequently",
+          "in the shop,",
           "{C:money}-$1{} {C:planet}Planet{} & {C:planet}Celestial{} cost"
         ]
       },
       "v_planet_tycoon": {
         "text": [
           "{C:planet}Planet{} cards appear",
-          "{C:attention}#1#X{} more frequently",
-          "in the shop",
+          "{C:attention}4X{} more frequently",
+          "in the shop,",
           "{C:money}-$1{} {C:planet}Planet{} & {C:planet}Celestial{} cost"
         ]
       },
       "v_tarot_merchant": {
         "text": [
           "{C:tarot}Tarot{} cards appear",
-          "{C:attention}#1#X{} more frequently",
-          "in the shop",
+          "{C:attention}2X{} more frequently",
+          "in the shop,",
           "{C:money}-$1{} {C:tarot}Tarot{} & {C:tarot}Arcana{} cost"
         ]
       },
       "v_tarot_tycoon": {
         "text": [
           "{C:tarot}Tarot{} cards appear",
-          "{C:attention}#1#X{} more frequently",
-          "in the shop",
+          "{C:attention}4X{} more frequently",
+          "in the shop,",
           "{C:money}-$1{} {C:tarot}Tarot{} & {C:tarot}Arcana{} cost"
         ]
       },
@@ -190,6 +231,13 @@
           "may have an {C:dark_edition}edition{},",
           "an {C:attention}enhancement{},",
           "and a {C:attention}seal{}"
+        ]
+      },
+      "v_observatory": {
+        "name": "Observatory",
+        "text": [
+          "{C:planet}Planet{} cards give",
+          "{C:attention}+2{} levels instead of {C:attention}+1{}"
         ]
       }
     },
@@ -237,16 +285,50 @@
           "After Play or Discard",
           "draw at most 3 cards"
         ]
+      },
+      "bl_needle": {
+        "name": "The Needle",
+        "text": [
+          "Play only 1 hand"
+        ]
+      },
+      "bl_water": {
+        "name": "The Water",
+        "text": [
+          "Start with 0 discards"
+        ]
+      },
+      "bl_hook": {
+        "name": "The Hook",
+        "text": [
+          "Discards 3 random",
+          "cards per hand played"
+        ]
+      },
+      "bl_wheel": {
+        "name": "The Wheel",
+        "text": [
+          "Every other card",
+          "is drawn face down"
+        ]
+      },
+      "bl_final_acorn": {
+        "name": "Amber Acorn",
+        "text": [
+          "Flips and shuffles",
+          "all Joker cards",
+          "and reshuffles on discard"
+        ]
       }
     },
     "Other": {
       "blue_seal": {
         "name": "Blue Seal",
         "text": [
-          "Creates a random",
-          "{C:dark_edition}Negative{} {C:planet}Planet{} card",
-          "if held in hand at",
-          "end of round"
+          "Creates the {C:planet}Planet{} card",
+          "for final played {C:attention}poker hand{}",
+          "of round if {C:attention}held{} in hand",
+          "Scrapes off after {C:attention}#1#{} triggers"
         ]
       }
     }

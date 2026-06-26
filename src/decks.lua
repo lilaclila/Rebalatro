@@ -6,7 +6,9 @@ SMODS.Back:take_ownership('b_nebula', {
     config = { consumable_slot = 0, voucher = false}, 
     calculate = function(self, back, context)
         if context.ending_shop and not G.IS_LOADING_SAVE then
-            G.E_MANAGER:add_event(Event({
+            if G.GAME.nebula_last_shop_ante ~= G.GAME.round_resets.ante then
+                G.GAME.nebula_last_shop_ante = G.GAME.round_resets.ante
+                G.E_MANAGER:add_event(Event({
                 func = function()
                     local secret_tag = Tag('tag_rebal_asteroid')
                     add_tag(secret_tag)
@@ -18,6 +20,11 @@ SMODS.Back:take_ownership('b_nebula', {
                     return true
                 end
             }))
+            end
         end
     end
+}, true)
+
+SMODS.Back:take_ownership('b_zodiac', {
+    config = {vouchers = {'v_overstock_norm', 'v_overstock_plus'}},
 }, true)
