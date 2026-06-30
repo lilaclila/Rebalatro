@@ -347,11 +347,22 @@ match_indent = true
 
 [[patches]]
 [patches.pattern]
-target = "functions/UI_definitions.lua"
-pattern = "_size*G.CARD_W*1.1,"
+target = "cardarea.lua"
+pattern = """                if #self.cards > 1 then
+                    card.T.x = self.T.x + (self.T.w-self.card_w)*((k-1)/(#self.cards-1)) + 0.5*(self.card_w - card.T.w)
+                else"""
 position = "at"
-payload = "    _size*G.CARD_W*1.3,"
+payload = """                if #self.cards > 1 then
+                    local actual_w = self.T.w
+                    if self == G.pack_cards and self.cards and self.cards[1] and self.cards[1].base and self.cards[1].base.suit then actual_w = self.T.w * 1.12 end
+                    card.T.x = self.T.x + (actual_w-self.card_w)*((k-1)/(#self.cards-1)) + 0.5*(self.card_w - card.T.w) - (actual_w - self.T.w)/2
+                else"""
 match_indent = true
+times = 1
+
+
+
+
 
 [[patches]]
 [patches.pattern]
