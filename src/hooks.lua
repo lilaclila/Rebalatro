@@ -286,19 +286,6 @@ if Card and Card.apply_to_run then
     end
 end
 
-local _get_current_shop_base_weights = get_current_shop_base_weights
-function get_current_shop_base_weights()
-    local weights, total = _get_current_shop_base_weights()
-    if G.GAME and G.GAME.used_vouchers and G.GAME.used_vouchers.v_magic_trick then
-        local card_slots = (G.shop_jokers and G.shop_jokers.config.card_limit) or 2
-        local playing_card_current_weight = weights.playing_card or 0
-        local new_weight = (1 / card_slots) * (total - playing_card_current_weight)
-        weights.playing_card = new_weight
-        total = total - playing_card_current_weight + new_weight
-    end
-    return weights, total
-end
-
 if Back and Back.apply_to_run then
     local _back_apply = Back.apply_to_run
     function Back:apply_to_run()
