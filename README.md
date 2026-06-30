@@ -27,7 +27,6 @@ Here is a list of all the changes (that i remember) I have made to vanilla conte
 
 **Jokers:**
 
-* Yorick - requires 51 discards to scale, instead of 23
 * Throwback - scales based on Tags gained, rather than Blinds skipped
 * Flower Pot - triggers if there are 3 or more unique suits among all scoring cards, instead of all 4
 * Yorick - requires 51 discards to scale, instead of 23
