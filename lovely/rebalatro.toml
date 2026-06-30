@@ -1,7 +1,148 @@
 [manifest]
-version = "1.0.0"
+version = "1.4.3-beta"
 dump_lua = true
 priority = 0
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = """                    {string = 'rand()', colour = G.C.JOKER_GREY},{string = "#@"..(G.deck and G.deck.cards[1] and G.deck.cards[#G.deck.cards].base.id or 11)..(G.deck and G.deck.cards[1] and G.deck.cards[#G.deck.cards].base.suit:sub(1,1) or 'D'), colour = G.C.RED},"""
+position = "at"
+payload = """                    {string = 'rand()', colour = G.C.JOKER_GREY},{string = "#@"..((self.area == G.jokers and G.deck and G.deck.cards[1]) and (G.deck.cards[#G.deck.cards].base.id..G.deck.cards[#G.deck.cards].base.suit:sub(1,1)) or '11D'), colour = G.C.RED},"""
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = """
+G.hand.config.card_limits.blind_restriction = hand_space - math.min(#G.deck.cards, 3)
+hand_space = math.min(#G.deck.cards, 3)
+"""
+position = "at"
+payload = """
+local num_cards = math.max(0, math.min(#G.deck.cards, 3, G.hand.config.card_limit - #G.hand.cards))
+G.hand.config.card_limits.blind_restriction = hand_space - num_cards
+hand_space = num_cards"""
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = """            for j = 1, #G.jokers.cards do
+                local eval = nil
+                eval = G.jokers.cards[j]:calculate_joker({discard = true, other_card =  G.hand.highlighted[i], full_hand = G.hand.highlighted})
+                if eval then
+                    if eval.remove then removed = true end
+                    card_eval_status_text(G.jokers.cards[j], 'jokers', nil, 1, nil, eval)
+                end
+            end"""
+position = "at"
+payload = """
+            local allowed_jokers = {['Yorick'] = true, ['Hit the Road'] = true, ['Ramen'] = true, ['Castle'] = true, ['Mail-In Rebate'] = true}
+            local has_allowed = false
+            if G.jokers and G.jokers.cards then
+                for _, jk in ipairs(G.jokers.cards) do
+                    if allowed_jokers[jk.ability.name] then
+                        has_allowed = true
+                        break
+                    end
+                end
+            end
+            local reps = 1 + ((has_allowed and G.hand.highlighted[i]:get_seal() == 'Red') and 1 or 0)
+            for r = 1, reps do
+                if r > 1 then
+                    card_eval_status_text(G.hand.highlighted[i], 'extra', nil, nil, nil, {message = localize('k_again_ex')})
+                end
+                for j = 1, #G.jokers.cards do
+                    if r == 1 or allowed_jokers[G.jokers.cards[j].ability.name] then
+                        local eval = nil
+                        eval = G.jokers.cards[j]:calculate_joker({discard = true, other_card =  G.hand.highlighted[i], full_hand = G.hand.highlighted})
+                        if eval then
+                            if eval.remove then removed = true end
+                            card_eval_status_text(G.jokers.cards[j], 'jokers', nil, 1, nil, eval)
+                        end
+                    end
+                end
+            end
+"""
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "blind.lua"
+pattern = '''
+            for i = 1, 2 do
+                if G.hand.cards[i] then 
+                    local selected_card, card_key = pseudorandom_element(_cards, pseudoseed('hook'))
+'''
+position = "at"
+payload = '''
+            for i = 1, 3 do
+                if G.hand.cards[i] then 
+                    local selected_card, card_key = pseudorandom_element(_cards, pseudoseed('hook'))
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "if G.GAME.used_vouchers.v_observatory and self.ability.consumeable.hand_type == context.scoring_name then"
+position = "at"
+payload = "if false and G.GAME.used_vouchers.v_observatory and self.ability.consumeable.hand_type == context.scoring_name then"
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "level_up_hand(used_tarot, self.ability.consumeable.hand_type)"
+position = "at"
+payload = '''
+        local lvl_amt = 1
+        if G.GAME.used_vouchers.v_observatory then lvl_amt = 2 end
+        level_up_hand(used_tarot, self.ability.consumeable.hand_type, nil, lvl_amt)
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''
+        card_eval_status_text(self, 'extra', nil, nil, nil, {message = localize('k_plus_planet'), colour = G.C.SECONDARY_SET.Planet})
+'''
+position = "at"
+payload = '''
+        self.ability.blue_seal_triggers = (self.ability.blue_seal_triggers or 0) + 1
+        local msg = localize('k_plus_planet')
+        if self.ability.blue_seal_triggers >= 3 then
+            msg = "Scraped!"
+            G.E_MANAGER:add_event(Event({
+                trigger = 'after',
+                delay = 0.1,
+                func = function()
+                    self:set_seal(nil, true)
+                    return true
+                end
+            }))
+        end
+        card_eval_status_text(self, 'extra', nil, nil, nil, {message = msg, colour = G.C.SECONDARY_SET.Planet})
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "update_hand_text({sound = 'button', volume = 0.7, pitch = 0.9, delay = 0}, {level='+1'})"
+position = "at"
+payload = "update_hand_text({sound = 'button', volume = 0.7, pitch = 0.9, delay = 0}, {level='+3'})"
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "level_up_hand(self, k, true)"
+position = "at"
+payload = "level_up_hand(self, k, true, 3)"
+match_indent = true
 
 [[patches]]
 [patches.pattern]
