@@ -1,5 +1,5 @@
 SMODS.Back:take_ownership('b_black', {
-config = { hands = 0, discards = -1, joker_slot = 1}
+    config = { hands = -1, discards = 0, joker_slot = 1}
 }, true)
 
 SMODS.Back:take_ownership('b_nebula', {
@@ -26,5 +26,30 @@ SMODS.Back:take_ownership('b_nebula', {
 }, true)
 
 SMODS.Back:take_ownership('b_zodiac', {
-    config = {vouchers = {'v_overstock_norm', 'v_overstock_plus'}},
+    config = {vouchers = {'v_tarot_merchant', 'v_planet_merchant'}},
+    apply = function(self)
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                if G.P_CENTER_POOLS and G.P_CENTER_POOLS['Booster'] then
+                    for _, v in ipairs(G.P_CENTER_POOLS['Booster']) do
+                        if v.kind == 'Arcana' or v.kind == 'Celestial' then
+                            G.GAME.banned_keys[v.key] = true
+                        end
+                    end
+                end
+                return true
+            end
+        }))
+    end
+}, true)
+
+SMODS.Back:take_ownership('b_ghost', {
+    apply = function(self, back)
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                G.GAME.modifiers.ghost_deck_omen = true
+                return true
+            end
+        }))
+    end
 }, true)

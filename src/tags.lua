@@ -117,6 +117,7 @@ SMODS.Tag {
         end
     end
 }
+
 SMODS.Tag:take_ownership('tag_investment', {
     config = {type = 'eval', dollars = 20}
 }, true)

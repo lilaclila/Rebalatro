@@ -1,274 +1,354 @@
-
 [manifest]
-version = "1.3.0"
+version = "1.0.0"
 dump_lua = true
 priority = 0
 
-
 [[patches]]
 [patches.pattern]
-target = "tag.lua"
-pattern = """                    card = create_card('Joker', _context.area, nil, 1, nil, nil, nil, 'rta')"""
+target = "card.lua"
+pattern = "if self.ability.name == 'Baron' and\n                        context.other_card:get_id() == 13 then"
 position = "at"
-payload = """                    card = create_card('Joker', _context.area, nil, 1, nil, nil, nil, 'rta')
-                    card.ability.eternal = nil; card.ability.perishable = nil; card.ability.rental = nil"""
+payload = "if self.ability.name == 'Baron' and (context.other_card:get_id() == 13 or context.other_card:get_id() == 12) then"
 match_indent = true
 
-[[patches]]
-[patches.pattern]
-target = "tag.lua"
-pattern = """                card = create_card('Joker', _context.area, nil, 0.9, nil, nil, nil, 'uta')"""
-position = "at"
-payload = """                card = create_card('Joker', _context.area, nil, 0.9, nil, nil, nil, 'uta')
-                card.ability.eternal = nil; card.ability.perishable = nil; card.ability.rental = nil"""
-match_indent = true
-
-
-[[patches]]
-[patches.pattern]
-target = "tag.lua"
-pattern = """                        _context.card:set_edition({foil = true}, true)"""
-position = "at"
-payload = """                        _context.card:set_edition({foil = true}, true)
-                        _context.card.ability.eternal = nil; _context.card.ability.perishable = nil; _context.card.ability.rental = nil"""
-match_indent = true
-
-
-[[patches]]
-[patches.pattern]
-target = "tag.lua"
-pattern = """                        _context.card:set_edition({holo = true}, true)"""
-position = "at"
-payload = """                        _context.card:set_edition({holo = true}, true)
-                        _context.card.ability.eternal = nil; _context.card.ability.perishable = nil; _context.card.ability.rental = nil"""
-match_indent = true
-
-
-[[patches]]
-[patches.pattern]
-target = "tag.lua"
-pattern = """                        _context.card:set_edition({polychrome = true}, true)"""
-position = "at"
-payload = """                        _context.card:set_edition({polychrome = true}, true)
-                        _context.card.ability.eternal = nil; _context.card.ability.perishable = nil; _context.card.ability.rental = nil"""
-match_indent = true
-
-
-[[patches]]
-[patches.pattern]
-target = "tag.lua"
-pattern = """                        _context.card:set_edition({negative = true}, true)"""
-position = "at"
-payload = """                        _context.card:set_edition({negative = true}, true)
-                        _context.card.ability.eternal = nil; _context.card.ability.perishable = nil; _context.card.ability.rental = nil"""
-match_indent = true
 
 [[patches]]
 [patches.pattern]
 target = "card.lua"
-pattern = """                    {string = 'rand()', colour = G.C.JOKER_GREY},{string = "#@"..(G.deck and G.deck.cards[1] and G.deck.cards[#G.deck.cards].base.id or 11)..(G.deck and G.deck.cards[1] and G.deck.cards[#G.deck.cards].base.suit:sub(1,1) or 'D'), colour = G.C.RED},"""
-position = "at"
-payload = """                    {string = 'rand()', colour = G.C.JOKER_GREY},{string = "#@"..((self.area == G.jokers and G.deck and G.deck.cards[1]) and (G.deck.cards[#G.deck.cards].base.id..G.deck.cards[#G.deck.cards].base.suit:sub(1,1)) or '11D'), colour = G.C.RED},"""
-match_indent = true
-
-[[patches]]
-[patches.pattern]
-target = "functions/state_events.lua"
-pattern = """
-G.hand.config.card_limits.blind_restriction = hand_space - math.min(#G.deck.cards, 3)
-hand_space = math.min(#G.deck.cards, 3)
-"""
-position = "at"
-payload = """
-local num_cards = math.max(0, math.min(#G.deck.cards, 3, G.hand.config.card_limit - #G.hand.cards))
-G.hand.config.card_limits.blind_restriction = hand_space - num_cards
-hand_space = num_cards"""
-match_indent = true
-
-[[patches]]
-[patches.pattern]
-target = "UI_definitions.lua"
-pattern = """{n=G.UIT.T, config={text = string.rep(localize("$"), blind_choice.config.dollars)..'+', scale = 0.35, colour = disabled and G.C.UI.TEXT_INACTIVE or G.C.MONEY, shadow = not disabled}}"""
-position = "at"
-payload = """
-{n=G.UIT.T, config={text = string.rep(localize("$"), math.max(0, blind_choice.config.dollars - ((G.GAME.stake or 1) >= 2 and 1 or 0)))..'+', scale = 0.35, colour = disabled and G.C.UI.TEXT_INACTIVE or G.C.MONEY, shadow = not disabled}}
-"""
-match_indent = true
-
-[[patches]]
-[patches.pattern]
-target = "card.lua"
-pattern = "update_hand_text({sound = 'button', volume = 0.7, pitch = 0.9, delay = 0}, {level='+1'})"
-position = "at"
-payload = "update_hand_text({sound = 'button', volume = 0.7, pitch = 0.9, delay = 0}, {level='+3'})"
-match_indent = true
-
-[[patches]]
-[patches.pattern]
-target = "card.lua"
-pattern = "level_up_hand(self, k, true)"
-position = "at"
-payload = "level_up_hand(self, k, true, 3)"
-match_indent = true
-
-[[patches]]
-[patches.pattern]
-target = "card.lua"
-pattern = "ease_dollars(-G.GAME.dollars, true)"
-position = "at"
-payload = "ease_dollars(-math.floor(math.max(0, G.GAME.dollars) / 2), true)"
-match_indent = true
-
-[[patches]]
-[patches.pattern]
-target = "functions/state_events.lua"
-pattern = """            for j = 1, #G.jokers.cards do
-                local eval = nil
-                eval = G.jokers.cards[j]:calculate_joker({discard = true, other_card =  G.hand.highlighted[i], full_hand = G.hand.highlighted})
-                if eval then
-                    if eval.remove then removed = true end
-                    card_eval_status_text(G.jokers.cards[j], 'jokers', nil, 1, nil, eval)
-                end
-            end"""
-position = "at"
-payload = """
-            local allowed_jokers = {['Yorick'] = true, ['Hit the Road'] = true, ['Ramen'] = true, ['Castle'] = true, ['Mail-In Rebate'] = true}
-            local has_allowed = false
-            if G.jokers and G.jokers.cards then
-                for _, jk in ipairs(G.jokers.cards) do
-                    if allowed_jokers[jk.ability.name] then
-                        has_allowed = true
-                        break
-                    end
-                end
-            end
-            local reps = 1 + ((has_allowed and G.hand.highlighted[i]:get_seal() == 'Red') and 1 or 0)
-            for r = 1, reps do
-                if r > 1 then
-                    card_eval_status_text(G.hand.highlighted[i], 'extra', nil, nil, nil, {message = localize('k_again_ex')})
-                end
-                for j = 1, #G.jokers.cards do
-                    if r == 1 or allowed_jokers[G.jokers.cards[j].ability.name] then
-                        local eval = nil
-                        eval = G.jokers.cards[j]:calculate_joker({discard = true, other_card =  G.hand.highlighted[i], full_hand = G.hand.highlighted})
-                        if eval then
-                            if eval.remove then removed = true end
-                            card_eval_status_text(G.jokers.cards[j], 'jokers', nil, 1, nil, eval)
-                        end
-                    end
-                end
-            end
-"""
-match_indent = true
-
-[[patches]]
-[patches.pattern]
-target = "card.lua"
-pattern = """            delay(0.5)
-            ease_dollars(self.ability.extra.dollars)"""
-position = "before"
-payload = """
-            if G.jokers and G.jokers.cards then
-                local destructable_jokers = {}
-                for i = 1, #G.jokers.cards do
-                    if G.jokers.cards[i] ~= self and not G.jokers.cards[i].ability.eternal and not G.jokers.cards[i].getting_sliced then 
-                        destructable_jokers[#destructable_jokers+1] = G.jokers.cards[i] 
-                    end
-                end
-                local joker_to_destroy = #destructable_jokers > 0 and pseudorandom_element(destructable_jokers, pseudoseed('immolate_joker')) or nil
-
-                if joker_to_destroy then 
-                    G.E_MANAGER:add_event(Event({
-                        trigger = 'after',
-                        delay = 0.4,
-                        func = function()
-                            joker_to_destroy:start_dissolve(nil, nil)
-                            return true
-                        end
-                    }))
-                end
-            end
-"""
-match_indent = true
-
-[[patches]]
-[patches.pattern]
-target = "card.lua"
-pattern = '''
-        card_eval_status_text(self, 'extra', nil, nil, nil, {message = localize('k_plus_planet'), colour = G.C.SECONDARY_SET.Planet})
-'''
-position = "at"
-payload = '''
-        self.ability.blue_seal_triggers = (self.ability.blue_seal_triggers or 0) + 1
-        local msg = localize('k_plus_planet')
-        if self.ability.blue_seal_triggers >= 3 then
-            msg = "Scraped!"
-            G.E_MANAGER:add_event(Event({
-                trigger = 'after',
-                delay = 0.1,
-                func = function()
-                    self:set_seal(nil, true)
-                    return true
-                end
-            }))
-        end
-        card_eval_status_text(self, 'extra', nil, nil, nil, {message = msg, colour = G.C.SECONDARY_SET.Planet})
-'''
-match_indent = true
-
-[[patches]]
-[patches.pattern]
-target = "functions/state_events.lua"
-pattern = '''
-            ease_discard(-1)
-'''
+pattern = "function Card:set_debuff(should_debuff)"
 position = "after"
 payload = '''
-            if G.GAME.blind.name == 'Amber Acorn' and #G.jokers.cards > 1 then
-                G.E_MANAGER:add_event(Event({ trigger = 'after', delay = 0.2, func = function() 
-                    G.E_MANAGER:add_event(Event({ func = function() G.jokers:shuffle('aajk'); play_sound('cardSlide1', 0.85);return true end })) 
-                    delay(0.15)
-                    G.E_MANAGER:add_event(Event({ func = function() G.jokers:shuffle('aajk'); play_sound('cardSlide1', 1.15);return true end })) 
-                    delay(0.15)
-                    G.E_MANAGER:add_event(Event({ func = function() G.jokers:shuffle('aajk'); play_sound('cardSlide1', 1);return true end })) 
-                    delay(0.5)
-                return true end })) 
-            end
+    if self.config.center == G.P_CENTERS.m_wild then
+        should_debuff = false
+    end
 '''
 match_indent = true
 
 [[patches]]
 [patches.pattern]
 target = "card.lua"
-pattern = "if G.GAME.used_vouchers.v_observatory and self.ability.consumeable.hand_type == context.scoring_name then"
-position = "at"
-payload = "if false and G.GAME.used_vouchers.v_observatory and self.ability.consumeable.hand_type == context.scoring_name then"
+pattern = "elseif G.GAME.pack_choices and G.GAME.pack_choices > 1 then"
+position = "before"
+payload = '''
+                  if G.GAME.pack_choices == nil then G.GAME.pack_choices = 1 end
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = "if state == G.STATES.TAROT_PACK or state == G.STATES.SPECTRAL_PACK or state == G.STATES.PLANET_PACK or state == G.STATES.STANDARD_PACK or state == G.STATES.BUFFOON_PACK then"
+position = "after"
+payload = '''
+        if #G.hand.cards == 0 then
+            G.FUNCS.end_consumeable(nil, 1)
+        end
+'''
 match_indent = true
 
 [[patches]]
 [patches.pattern]
 target = "card.lua"
-pattern = "level_up_hand(used_tarot, self.ability.consumeable.hand_type)"
+pattern = "if G.GAME.used_vouchers.v_omen_globe and pseudorandom('omen_globe') > 0.8 then"
 position = "at"
 payload = '''
-        local lvl_amt = 1
-        if G.GAME.used_vouchers.v_observatory then lvl_amt = 2 end
-        level_up_hand(used_tarot, self.ability.consumeable.hand_type, nil, lvl_amt)
+if (G.GAME.modifiers.ghost_deck_omen) and pseudorandom('omen_globe') > 0.8 then
 '''
 match_indent = true
 
 [[patches]]
 [patches.pattern]
-target = "blind.lua"
+target = "card.lua"
+pattern = "if G.GAME.dollars ~= 0 then\n                  ease_dollars(-G.GAME.dollars, true)\n              end"
+position = "at"
+payload = '''
+              if G.GAME.dollars > 0 then
+                  ease_dollars(-math.ceil(G.GAME.dollars / 2), true)
+              end
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "if self.debuff then return 0 end"
+position = "at"
+payload = "if self.debuff and not next(find_joker('Splash')) then return 0 end"
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "if self.debuff then return nil end"
+position = "at"
+payload = "if self.debuff and not (self.ability.set ~= 'Joker' and next(find_joker('Splash'))) then return nil end"
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = "if scoring_hand[i].debuff then"
+position = "at"
+payload = "if scoring_hand[i].debuff and not next(find_joker('Splash')) then"
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "function Card:update(dt)"
+position = "after"
+payload = '''
+    if G.jokers and self.area == G.jokers and G.GAME and G.GAME.blind and G.GAME.blind.name == 'Crimson Heart' and not G.GAME.blind.disabled then
+        local rightmost = false
+        local num = #G.jokers.cards
+        if self == G.jokers.cards[num] or (num > 1 and self == G.jokers.cards[num - 1]) then
+            rightmost = true
+        end
+        if self.debuff ~= rightmost then
+            self:set_debuff(rightmost)
+        end
+    end
+'''
+match_indent = true
+
+
+
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = "inc_career_stat('c_cards_discarded', highlighted_count)"
+position = "after"
+payload = '''
+    if G.GAME.blind and G.GAME.blind.name == 'Amber Acorn' and not G.GAME.blind.disabled then
+        if G.jokers and G.jokers.cards and #G.jokers.cards > 1 then
+            G.E_MANAGER:add_event(Event({ trigger = 'after', delay = 0.2, func = function() 
+                G.E_MANAGER:add_event(Event({ func = function() G.jokers:shuffle('aajk'); play_sound('cardSlide1', 0.85);return true end })) 
+                delay(0.15)
+                G.E_MANAGER:add_event(Event({ func = function() G.jokers:shuffle('aajk'); play_sound('cardSlide1', 1.15);return true end })) 
+                delay(0.15)
+                G.E_MANAGER:add_event(Event({ func = function() G.jokers:shuffle('aajk'); play_sound('cardSlide1', 1);return true end })) 
+                delay(0.5)
+            return true end })) 
+        end
+    end
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "cardarea.lua"
+pattern = "pseudoshuffle(self.cards, pseudoseed(_seed or 'shuffle'))"
+position = "before"
+payload = '''
+    if G.CONTROLLER then G.CONTROLLER.interrupt.focus = true end
+    for _, v in ipairs(self.cards) do
+        v.states.drag.is = false
+        v.states.hover.is = false
+        v.states.focus.is = false
+    end
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "self.children.back = Sprite(self.T.x, self.T.y, self.T.w, self.T.h, G.ASSET_ATLAS[\"centers\"], self.params.bypass_back or (self.playing_card and G.GAME[self.back].pos or G.P_CENTERS['b_red'].pos))"
+position = "at"
+payload = "self.children.back = Sprite(self.T.x, self.T.y, self.T.w, self.T.h, G.ASSET_ATLAS[\"centers\"], self.params.bypass_back or (self.playing_card and G.GAME[self.back].pos or (G.GAME and G.GAME.selected_back and G.GAME.selected_back.effect.center.pos) or G.P_CENTERS['b_red'].pos))"
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = "local new_card = new_card or Card(other.T.x, other.T.y, G.CARD_W*(card_scale or 1), G.CARD_H*(card_scale or 1), G.P_CARDS.empty, G.P_CENTERS.c_base, {playing_card = playing_card})"
+position = "at"
+payload = "local new_card = new_card or Card(other.T.x, other.T.y, G.CARD_W*(card_scale or 1), G.CARD_H*(card_scale or 1), G.P_CARDS.empty, G.P_CENTERS.c_base, {playing_card = playing_card, bypass_discovery_center = other.params and other.params.bypass_discovery_center, bypass_discovery_ui = other.params and other.params.bypass_discovery_ui, bypass_back = other.params and other.params.bypass_back})"
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = "function Game:start_run(args)"
+position = "after"
+payload = '''
+for k, v in pairs(self.P_CENTERS) do
+    if v.kind == 'Standard' and v.set == 'Booster' and not v.rebalatro_patched then
+        v.config.extra = v.config.extra + 1
+        v.rebalatro_patched = true
+    end
+end
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = "if G.GAME.used_vouchers.v_magic_trick and pseudorandom('magic_trick') > 0.714285 then"
+position = "at"
+payload = "if false then"
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = 'game.lua'
+position = 'after'
 pattern = '''
-            for i = 1, 2 do
-                if G.hand.cards[i] then 
-                    local selected_card, card_key = pseudorandom_element(_cards, pseudoseed('hook'))
+                                        for i = 1, G.GAME.shop.joker_max - #G.shop_jokers.cards do
+                                            G.shop_jokers:emplace(create_card_for_shop(G.shop_jokers))
+                                        end 
 '''
-position = "at"
 payload = '''
-            for i = 1, 3 do
-                if G.hand.cards[i] then 
-                    local selected_card, card_key = pseudorandom_element(_cards, pseudoseed('hook'))
+                                    if G.GAME.used_vouchers.v_magic_trick then
+                                        local force_enh = false
+                                        local force_edi = false
+                                        local force_seal = false
+                                        if G.GAME.used_vouchers.v_illusion then
+                                            local r = pseudorandom(pseudoseed('illusion_pre'))
+                                            if r < 0.333 then force_enh = true
+                                            elseif r < 0.666 then force_edi = true
+                                            else force_seal = true end
+                                        end
+
+                                        local pc = create_card((force_enh or pseudorandom(pseudoseed('magic_trick_enh')) > 0.6) and 'Enhanced' or 'Base', G.shop_jokers, nil, nil, nil, nil, nil, 'sho')
+                                        if force_enh and pc.ability.set == 'Default' then
+                                            pc:set_ability(G.P_CENTERS[SMODS.poll_enhancement({key = 'illusion_enh', guaranteed = true})])
+                                        end
+                                        
+                                        local edition_rate = 2
+                                        local edition = poll_edition('magic_trick_edi', edition_rate, true, force_edi)
+                                        pc:set_edition(edition)
+                                        
+                                        local seal_rate = 10
+                                        local seal_poll = pseudorandom(pseudoseed('magic_trick_seal'))
+                                        if force_seal or seal_poll > 1 - 0.02*seal_rate then pc:set_seal(SMODS.poll_seal({guaranteed = true})) end
+                                        
+                                        create_shop_card_ui(pc, 'Base', G.shop_jokers)
+                                        pc:start_materialize()
+                                        G.shop_jokers.config.card_limit = math.max(G.shop_jokers.config.card_limit, #G.shop_jokers.cards + 1)
+                                        G.shop_jokers:emplace(pc)
+                                        G.shop_jokers.T.w = math.max(G.GAME.shop.joker_max, #G.shop_jokers.cards) * 1.02 * G.CARD_W
+                                        if G.shop then G.shop:recalculate() end
+                                    end
 '''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = 'functions/button_callbacks.lua'
+position = 'after'
+pattern = '''
+            new_shop_card:juice_up()
+          end
+'''
+payload = '''
+          if G.GAME.used_vouchers.v_magic_trick then
+              local force_enh = false
+              local force_edi = false
+              local force_seal = false
+              if G.GAME.used_vouchers.v_illusion then
+                  local r = pseudorandom(pseudoseed('illusion_pre_rr'))
+                  if r < 0.333 then force_enh = true
+                  elseif r < 0.666 then force_edi = true
+                  else force_seal = true end
+              end
+
+              local pc = create_card((force_enh or pseudorandom(pseudoseed('magic_trick_enh_rr')) > 0.6) and 'Enhanced' or 'Base', G.shop_jokers, nil, nil, nil, nil, nil, 'sho')
+              if force_enh and pc.ability.set == 'Default' then
+                  pc:set_ability(G.P_CENTERS[SMODS.poll_enhancement({key = 'illusion_enh', guaranteed = true})])
+              end
+              
+              local edition_rate = 2
+              local edition = poll_edition('magic_trick_edi_rr', edition_rate, true, force_edi)
+              pc:set_edition(edition)
+              
+              local seal_rate = 10
+              local seal_poll = pseudorandom(pseudoseed('magic_trick_seal_rr'))
+              if force_seal or seal_poll > 1 - 0.02*seal_rate then pc:set_seal(SMODS.poll_seal({guaranteed = true})) end
+              
+              create_shop_card_ui(pc, 'Base', G.shop_jokers)
+              pc:start_materialize()
+              G.shop_jokers.config.card_limit = math.max(G.shop_jokers.config.card_limit, #G.shop_jokers.cards + 1)
+              G.shop_jokers:emplace(pc)
+              G.shop_jokers.T.w = math.max(G.GAME.shop.joker_max, #G.shop_jokers.cards) * 1.02 * G.CARD_W
+              if G.shop then G.shop:recalculate() end
+          end
+'''
+match_indent = true
+
+
+[[patches]]
+[patches.pattern]
+target = 'card.lua'
+position = 'before'
+pattern = '''
+    self.sell_cost_label = self.facing == 'back' and '?' or self.sell_cost
+'''
+payload = '''
+    if self.area == G.shop_jokers and (self.ability.set == 'Default' or self.ability.set == 'Enhanced') then
+        local my_extra = 0
+        if self.edition then my_extra = my_extra + 1 end
+        if self.seal then my_extra = my_extra + 1 end
+        if self.ability.set == 'Enhanced' then my_extra = my_extra + 1 end
+        self.cost = math.max(1, math.floor((1 + my_extra + 0.5)*(100-G.GAME.discount_percent)/100))
+        self.sell_cost = math.max(1, math.floor(self.cost/2)) + (self.ability.extra_value or 0)
+    end
+'''
+match_indent = true
+
+
+
+[[patches]]
+[patches.regex]
+target = 'card.lua'
+pattern = '''(?s)(?<indent>[\t ]*)elseif self\.ability\.name:find\('Standard'\) then.*?[\n\t ]*elseif self\.ability\.name:find\('Buffoon'\) then'''
+position = 'at'
+line_prepend = '$indent'
+payload = '''
+elseif self.ability.name:find('Standard') then
+    local force_enh = false
+    local force_edi = false
+    local force_seal = false
+    if G.GAME.used_vouchers.v_illusion then
+        local r = pseudorandom(pseudoseed('illusion_pre_std'..G.GAME.round_resets.ante..tostring(i)))
+        if r < 0.333 then force_enh = true
+        elseif r < 0.666 then force_edi = true
+        else force_seal = true end
+    else
+        local r = pseudorandom(pseudoseed('standard_mod_choice'..G.GAME.round_resets.ante..tostring(i)))
+        if r < 0.333 then force_enh = true
+        elseif r < 0.666 then force_edi = true
+        else force_seal = true end
+    end
+
+    local args = {
+        set = 'Playing Card',
+        area = G.pack_cards,
+        skip_materialize = true,
+        soulable = true,
+        enhanced_poll = 0.6,
+    }
+
+    if force_enh then
+        args.enhancement = SMODS.poll_enhancement({key = 'illusion_enh_std', guaranteed = true})
+    end
+    if force_edi then
+        local edition_rate = 2
+        args.edition = poll_edition('standard_edition'..G.GAME.round_resets.ante, edition_rate, true, true)
+    end
+    if force_seal then
+        args.seal = SMODS.poll_seal({mod = 10, guaranteed = true})
+    end
+
+    local card = SMODS.create_card(args)
+
+    SMODS.calculate_context({modify_booster_card = true, booster = self, card = card, index = i})
+elseif self.ability.name:find('Buffoon') then'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+pattern = "_size*G.CARD_W*1.1,"
+position = "at"
+payload = "    _size*G.CARD_W*1.2,"
 match_indent = true

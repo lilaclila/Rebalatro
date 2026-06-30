@@ -1,60 +1,124 @@
-THIS MOD REQUIRES STEAMODDED AND LOVELY!
+**THIS MOD REQUIRES STEAMODDED AND LOVELY!
+*code by Me, blue seal art by zebragoboom***
 
-* Changed Blue Seal - Blue seal is now removed ("Scraped") from the card after 3 triggers
-* Changed Red Seal - now also retriggers the following discard effects: Ramen, Yorick, Mail-In Rebate, Castle, and Hit the Road
-* Changed Wraith - Now halves your money instead of setting it to $0
-* Changed Blue Stake - Now gives +1 discard and -1 hands, was -1 discard
-* Changed Red Stake - Blind reward money is reduced by $1
-* Changed Perishable sticker - Jokers with this sticker no longer have a reduced sell price relative to their base cost once they have perished.
-* Changed Black Deck - Now gives -1 discard, was -1 hands
-* Changed Nebula Deck:
 
-  * no longer has -1 consumable slot
-  * no longer has Telescope voucher
-  * Added new effect - after exiting the first shop in each ante, open a free mega celestial pack
-* Changed Zodiac Deck, now starts with overstock and overstock+ and jokers no longer appear in the shop
-* Changed The Serpent - now draw at most 3 cards after play or discard, instead of "always draw 3"
-* Changed The Hook - now discards 3 cards instead of 2
+
+Here is a list of all the changes (that i remember) I have made to vanilla content in this mod;
+
+
+
+**Base Mechanic(s):**
+
+* Base discards across all stakes increased by 1
+* All standard packs now contain 1 more card
+* Mult card gives +5 Mult instead of +4 Mult
+* Stone cards are now always played and scored
+* Wild cards cannot be debuffed
+
+
+
+**Stakes:**
+
+* Perishable jokers now also sell for their cost after perishing
+* Blue stake - -1 hand, was -1 discard
+* Red stake - all blind rewards are reduced by $1, was no Small Blind reward
+
+
+
+**Jokers:**
+
+* Yorick - requires 51 discards to scale, instead of 23
+* Throwback - scales based on Tags gained, rather than Blinds skipped
+* Flower Pot - triggers if there are 3 or more unique suits among all scoring cards, instead of all 4
+* Yorick - requires 51 discards to scale, instead of 23
+* Faceless Joker - pays out $4 when 3 face cards are discarded, instead of $5
+* Baron - held in hand Kings and Queens give X2 Mult, instead of Kings only and being 1.5X
+* Castle - gives +2 Chips per discarded card of \[suit], instead of +3
+* Lucky Cat - 0.2X Mult per lucky card successfully triggered, instead of 0.25X Mult
+* Space Joker - has a 1 in 3 chance to upgrade the played poker hand, was 1 in 4
+* Loyalty Card - X4 Mult every 5 hands, instead of every 6 hands
+* Splash - all played cards score, so Splash allows you to bypass debuffs for scoring effects.
+* Popcorn - starts at +24 Mult, instead of +20 Mult, so that it is affected by Perishable sticker
+* Turtle Bean - starts at +6 hand size, instead of +5, so that it is affected by Perishable sticker
+* Glass Joker - fixed a bug with spectrals that destroyed cards not scaling Glass Joker
+* Trading Card - gives $1, instead of $3
+* Sin Jokers - +4 mult, instead of +3
+* Sixth Sense - destroys the first card scored in the first played hand of the round if it is a 6 and creates a Spectral
+* DNA - copies the first card scored in the first played hand of the round, rather than just the first card played
+* Hanging Chad - retriggers the first two cards scored once insted of the first card twice
+* Satellite - starts at $2 a round, still scaling by +$1 for every unique planet card used this run
+* Swashbuckler - now adds its own sell value, and the sell value of Jokers and Consumables to Mult
+* Bloodstone - 1 in 3 chance for scored Hearts to gain a Red Seal
+* Troubadour - gives +3 hand size instead of +2 hand size
+* Misprint - can no longer see the next card to be drawn by looking at Misprint in the collection
+* The Idol - every time a \[rank] of \[suit] is scored, gains X0.1 Mult (lucky cat but for \[rank] of \[suit])
+* Mail-In Rebate - pays out $2 per card, was $5
+* Hit The Road and Campfire - now immune to Perishable
+
+
+
+**Blinds:**
+
+* The Serpent - draw at most 3 cards after play or discard, instead of "always draw 3"
+* The Hook - discards 3 cards, instead of 2
+* The Wheel - draw every other card face down, instead of a 1 in 7 chance for each card
+* The Needle - 1.5x base, was 1x base
+* The Water - 1.5x base, was 2x base
+* Crimson Heart - debuffs your 2 rightmost Jokers, instead of a random Joker every hand
+* Verdant Leaf - selling a Joker removes the debuff from cards currently held in your hand, rather than all cards in your deck
+* Cerulean Bell - forces one of the cards you selected to play to be returned to your hand before scoring
+* Amber Acorn - now also shuffles your Jokers every time a discard is used
 * Banned The Water on 'Golden Needle'
-* Buffed Jupiter - Now gives +20 chips instead of +15 chips
-* Buffed Earth - Now gives +30 chips instead of +25 chips
-* Buffed Planet X - Now gives +40 chips instead of +35 chips for Five of a Kind
-* Nerfed Mercury - Now gives +10 chips instead of +15
-* Nerfed Pluto - Now gives +5 chips instead of +10
-* Changed Venus - Now gives +3 Mult and +5 Chips
-* Buffed Black Hole - Now levels up each poker hand 3 times
-* Changed Ouija - Now -1 discards, was -1 hand size
-* Changed Hieroglyph - Now -1 discards instead of -1 hands
-* Changed Magic Trick - Now adds +1 shop slot as well as it's current effect.
-* Changed Illusion - Now allows playing cards in the shop to spawn with seals, and is affected by Hone and Glow Up
-* Changed Hone and Glow Up - Now increases the Negative edition rate by 2X/4X respectively, instead of X3 and X7 Polychrome rate
-* Buffed Merchant and Tycoon vouchers - Now additionally reduces their respective pack and card costs by $1
-* Changed Observatory - Planet cards now give +2 levels instead of +1
-* Changed Seed Money - Now increases the cap on interest earned in each round by $5
-* Changed Money Tree - Now increases the cap on interest earned in each round by $10
-* Changed Seed Money, Money Tree, and To The Moon to allow Green Deck to earn interest
-* Changed Coupon Tag - Now also makes any vouchers currently in the shop free
-* Changed Voucher Tag - Now adds a free voucher to the next shop that persists until you beat the Boss Blind
-* Changed Ethereal Tag - Now gives a free Jumbo Spectral Pack
-* Changed Uncommon, Rare, Polychrome, Negative, Holographic, and Foil tags - The Joker spawned by these tags will now be stickerless (no Eternal, Rental, or Perishable)
-* Made some Jokers incompatible with 'Perishable' - (Hit the Road, Campfire)
-* Changed Investment Tag -> Now $20, was $25
-* Changed Mail-In Rebate - Now pays out $2 per card, was $5
-* Changed The Idol - scrapped old effect, now every time a \[rank] of \[suit] is scored, gains X0.1 Mult
-* Changed Misprint - You can no longer see the next card to be drawn by looking at Misprint unless it is in your joker slots
-* Changed Troubadour - Now gives +3 hand size and -1 hands
-* Changed Bloodstone - scrapped old effect, now 1 in 3 chance for scored Hearts to gain a Red Seal
-* Changed Swashbuckler - Now also counts its own sell value and the sell value of consumables to Mult
-* Changed DNA - Now copies the first card scored in the first played hand of the round, rather than just the first card played
-* Changed Sixth Sense - Now destroys the first card scored in the first played hand of the round if it is a 6
-* Trading Card -> Gives $1 instead of $3
-* Sin Jokers now give +4 mult instead of +3
-* Changed Satellite - now starts at $2 a round, still scaling by +$1 for every unique planet card used this run
-* Changed Hanging Chad - retriggers the first two cards scored once insted of the first card twice
 
 
-KNOWN BUGS:
 
-* Initial hands and discards are incorrect at Blue Stake+
-* Double Tag localization is incorrect, as I have not yet implemented my double tag rework.
+**Planets:**
+
+* Jupiter - Now gives +20 chips instead of +15 chips
+* Earth - Now gives +30 chips instead of +25 chips
+* Planet X - Now gives +40 chips instead of +35 chips for Five of a Kind
+* Mercury - Now gives +10 chips instead of +15
+* Pluto - Now gives +5 chips instead of +10
+* Venus - Now gives +3 Mult and +5 Chips
+
+
+
+**Spectrals:**
+
+* Black Hole - levels up each poker hand 3 times
+* Ouija - -1 discards, was -1 hand size
+* Wraith - halves your money instead of setting it to 0
+
+
+
+**Decks:**
+
+* Ghost Deck - Spectrals can now also appear in Arcana Packs
+* Nebula Deck - completely new effect; after exiting the first shop in each ante, Open a Mega Celestial pack
+* Zodiac Deck - completely new effect; Start with Planet Merchant and Tarot Merchant. Arcana packs, Celestial packs and Jokers no longer appear in the shop.
+* Green Deck - now has an interest cap of 0, rather than being incapable of earning interest. (matters for seed money and money tree)
+
+
+
+**Vouchers:**
+
+* Hieroglyph - -2 discards instead of -1 hands
+* Magic Trick - adds a playing card slot to the shop
+* Illusion - playing cards in the shop and in standard packs are guaranteed to have at least a seal, an edition, or an enhancement.
+* Hone/Glow Up - now affects Negative edition rate, and every edition's rate is now increased by 2x/4x uniformly (instead of polychrome being 3x/7x and the others being 2x/4x)
+* Merchant and Tycoon vouchers - Now additionally reduces their respective pack and card costs by $1
+* Observatory - Planet cards now give +2 levels instead of +1
+* Seed Money - Now increases the cap on interest earned in each round by $5 (only matters for green deck)
+* Money Tree - Now increases the cap on interest earned in each round by $10 (only matters for green deck)
+
+
+
+**Tags:**
+
+* Coupon Tag - Now also makes any vouchers currently in the shop free
+* Voucher Tag - voucher added by this tag is also free
+* Ethereal Tag - Now opens a free Jumbo Spectral Pack
+* Uncommon, Rare, Polychrome, Negative, Holographic, and Foil Tag - The Joker spawned by these tags will now be stickerless (no Eternal, Rental, or Perishable)
+* Polychrome, Negative, Holographic, and Foil Tag - also be applies to Jokers in Buffoon packs
+* Investment Tag - Now $20, was $25
 

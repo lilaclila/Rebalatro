@@ -393,3 +393,51 @@ SMODS.Joker:take_ownership('j_hanging_chad', {
 SMODS.Joker:take_ownership('j_faceless', {
     config = {extra = {dollars = 4, faces = 3}}
 }, true)
+SMODS.Joker:take_ownership('j_baron', {
+    config = {extra = 2}
+}, true)
+
+SMODS.Joker:take_ownership('j_castle', {
+    config = {extra = {chips = 0, chip_mod = 2}}
+}, true)
+
+SMODS.Joker:take_ownership('j_lucky_cat', {
+    config = {Xmult = 1, extra = 0.2}
+}, true)
+
+SMODS.Joker:take_ownership('j_space', {
+    config = {extra = 3}
+}, true)
+
+SMODS.Joker:take_ownership('j_loyalty_card', {
+    config = {extra = {Xmult = 4, every = 4, remaining = "4 remaining"}}
+}, true)
+
+SMODS.Joker:take_ownership('j_splash', {
+    calculate = function(self, card, context)
+        if context.before and context.scoring_hand then
+            for i = 1, #context.scoring_hand do
+                if context.scoring_hand[i].debuff then
+                    context.scoring_hand[i]:set_debuff(false)
+                    context.scoring_hand[i].ability.splash_undebuffed = true
+                end
+            end
+        end
+        if context.after and context.full_hand then
+            for i = 1, #context.full_hand do
+                if context.full_hand[i].ability.splash_undebuffed then
+                    context.full_hand[i]:set_debuff(true)
+                    context.full_hand[i].ability.splash_undebuffed = nil
+                end
+            end
+        end
+    end
+}, true)
+
+SMODS.Joker:take_ownership('j_popcorn', {
+    config = { mult = 24, extra = 4 }
+}, true)
+
+SMODS.Joker:take_ownership('j_turtle_bean', {
+    config = { extra = { h_size = 6, h_mod = 1 } }
+}, true)

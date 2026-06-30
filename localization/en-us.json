@@ -2,9 +2,10 @@
   "descriptions": {
     "Back": {
       "b_black": {
+        "name": "Black Deck",
         "text": [
           "{C:attention}+1{} Joker slot",
-          "{C:red}-1{} discard",
+          "{C:blue}-1{} hand",
           "every round"
         ]
       },
@@ -17,10 +18,20 @@
       },
       "b_zodiac": {
         "text": [
-          "Jokers no longer",
-	  "appear in the {C:attention}shop{},",
-          "start with {C:attention}Overstock{}",
-          "and {C:attention}Overstock Plus{}"
+          "Start with {C:planet,T:v_planet_merchant}Planet Merchant{}",
+          "and {C:tarot,T:v_tarot_merchant}Tarot Merchant{}",
+          "{C:inactive,s:0.8}(Arcana packs, Celestial{}",
+          "{C:inactive,s:0.8}packs, and Jokers no longer{}",
+          "{C:inactive,s:0.8}appear in the shop){}"
+        ]
+      },
+      "b_ghost": {
+        "name": "Ghost Deck",
+        "text": [
+          "{C:spectral}Spectral{} cards may",
+          "appear in the shop",
+          "and in {C:tarot}Arcana{} packs,",
+          "start with a {C:spectral,T:c_hex}Hex{} card"
         ]
       }
     },
@@ -71,7 +82,7 @@
       "j_troubadour": {
         "text": [
           "{C:attention}+#1#{} hand size,",
-          "{C:blue}-#2#{} hands each round"
+          "{C:blue}-#2#{} hand each round"
         ]
       },
       "j_bloodstone": {
@@ -148,6 +159,40 @@
           "contains at least {C:attention}3{}",
           "cards with a unique {C:attention}suit{}"
         ]
+      },
+      "j_baron": {
+        "name": "Baron",
+        "text": [
+          "{C:attention}Kings{} and {C:attention}Queens{}",
+          "held in hand",
+          "give {X:mult,C:white} X#1# {} Mult"
+        ]
+      },
+      "j_castle": {
+        "name": "Castle",
+        "text": [
+          "This Joker gains {C:chips}+#1#{} Chips",
+          "per discarded {V:1}#2#{} card,",
+          "suit changes every round",
+          "{C:inactive}(Currently {C:chips}+#3#{C:inactive} Chips)"
+        ]
+      },
+      "j_lucky_cat": {
+        "name": "Lucky Cat",
+        "text": [
+          "This Joker gains {X:mult,C:white} X#1# {} Mult",
+          "every time a {C:attention}Lucky{}",
+          "card successfully",
+          "triggers",
+          "{C:inactive}(Currently {X:mult,C:white} X#2# {C:inactive} Mult)"
+        ]
+      },
+      "j_splash": {
+        "name": "Splash",
+        "text": [
+          "All {C:attention}played cards",
+          "will score"
+        ]
       }
     },
     "Voucher": {
@@ -201,7 +246,7 @@
           "{C:tarot}Tarot{} cards appear",
           "{C:attention}4X{} more frequently",
           "in the shop,",
-          "{C:money}-$1{} {C:tarot}Tarot{} & {C:tarot}Arcana{} cost"
+          "{C:money}-{} {C:tarot}Tarot{} & {C:tarot}Arcana{} cost"
         ]
       },
       "v_hone": {
@@ -220,17 +265,16 @@
       },
       "v_magic_trick": {
         "text": [
-          "{C:attention}+1{} card slot available in shop",
-          "{C:attention}Playing cards{} can",
-          "appear in the shop"
+          "{C:attention}+#1#{} playing card slot",
+          "available in shop"
         ]
       },
       "v_illusion": {
         "text": [
           "{C:attention}Playing cards{} in shop",
-          "may have an {C:dark_edition}edition{},",
-          "an {C:attention}enhancement{},",
-          "and a {C:attention}seal{}"
+          "and {C:attention}Standard Packs{}",
+          "always have an {C:enhanced}Enhancement{},",
+          "{C:attention}Seal{}, or {C:dark_edition}Edition{}"
         ]
       },
       "v_observatory": {
@@ -239,21 +283,26 @@
           "{C:planet}Planet{} cards give",
           "{C:attention}+2{} levels instead of {C:attention}+1{}"
         ]
+      },
+      "v_omen_globe": {
+        "name": "Omen Globe",
+        "text": [
+          "{C:attention}+#1#{} consumable slot"
+        ]
       }
     },
     "Stake": {
       "stake_blue": {
         "text": [
-          "{C:blue}-1{} hands,",
-          "{C:red}+1{} discards",
+          "{C:blue}-1{} hands",
           "{s:0.8}Applies all previous Stakes{}"
         ]
       },
-	"stake_red": {
+      "stake_red": {
         "text": [
-	"{C:attention}Blind{} rewards",
-	"reduced by {C:money}$1{}",
-        "{s:0.8}Applies all previous Stakes{}"
+          "{C:attention}Blind{} rewards",
+          "reduced by {C:money}$1{}",
+          "{s:0.8}Applies all previous Stakes{}"
         ]
       }
     },
@@ -317,7 +366,31 @@
         "text": [
           "Flips and shuffles",
           "all Joker cards",
-          "and reshuffles on discard"
+          "{s:0.8}Reshuffles on discard"
+        ]
+      },
+      "bl_final_leaf": {
+        "name": "Verdant Leaf",
+        "text": [
+          "All cards are debuffed",
+          "Debuff is removed from",
+          "cards held in hand",
+          "when a Joker is sold"
+        ]
+      },
+      "bl_final_heart": {
+        "name": "Crimson Heart",
+        "text": [
+          "Two rightmost Jokers",
+          "are disabled"
+        ]
+      },
+      "bl_final_bell": {
+        "name": "Cerulean Bell",
+        "text": [
+          "1 card is always selected",
+          "Selected card is removed",
+          "from the played hand"
         ]
       }
     },
@@ -328,7 +401,79 @@
           "Creates the {C:planet}Planet{} card",
           "for final played {C:attention}poker hand{}",
           "of round if {C:attention}held{} in hand",
-          "Scrapes off after {C:attention}#1#{} triggers"
+          "{C:inactive}(Scrapes off after {C:attention}#1#{} {C:inactive}triggers){}"
+        ]
+      }
+    },
+    "Enhanced": {
+      "m_mult": {
+        "name": "Mult Card",
+        "text": [
+          "{C:mult}#1#{} Mult"
+        ]
+      },
+      "m_wild": {
+        "name": "Wild Card",
+        "text": [
+          "Can be used as any suit",
+          "Cannot be debuffed"
+        ]
+      },
+      "m_stone": {
+        "name": "Stone Card",
+        "text": [
+          "{C:chips}#1#{} Chips,",
+          "no rank or suit",
+          "Always played",
+          "and scored"
+        ]
+      }
+    },
+    "Tag": {
+      "tag_uncommon": {
+        "name": "Uncommon Tag",
+        "text": [
+          "Shop has a free",
+          "stickerless {C:green}Uncommon{} Joker"
+        ]
+      },
+      "tag_rare": {
+        "name": "Rare Tag",
+        "text": [
+          "Shop has a free",
+          "stickerless {C:red}Rare{} Joker"
+        ]
+      },
+      "tag_foil": {
+        "name": "Foil Tag",
+        "text": [
+          "Next base edition shop",
+          "or Buffoon pack Joker is",
+          "free, stickerless, and {C:dark_edition}Foil{}"
+        ]
+      },
+      "tag_holo": {
+        "name": "Holographic Tag",
+        "text": [
+          "Next base edition shop",
+          "or Buffoon pack Joker is",
+          "free, stickerless, and {C:dark_edition}Holographic{}"
+        ]
+      },
+      "tag_polychrome": {
+        "name": "Polychrome Tag",
+        "text": [
+          "Next base edition shop",
+          "or Buffoon pack Joker is",
+          "free, stickerless, and {C:dark_edition}Polychrome{}"
+        ]
+      },
+      "tag_negative": {
+        "name": "Negative Tag",
+        "text": [
+          "Next base edition shop",
+          "or Buffoon pack Joker is",
+          "free, stickerless, and {C:dark_edition}Negative{}"
         ]
       }
     }
