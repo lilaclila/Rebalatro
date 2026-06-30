@@ -64,59 +64,6 @@ SMODS.Joker:take_ownership('j_idol', {
     end
 }, true)
 
-SMODS.Joker:take_ownership('j_to_the_moon', {  
-    loc_vars = function(self, info_queue, card)
-        local interest_val = (type(card.ability.extra) == 'table' and card.ability.extra.interest) or 1
-        return { vars = { interest_val, 10 } }
-    end,
-    
-    update = function(self, card, dt)
-        if G.GAME then
-            local ttm_count = 0
-            local interest_val = (type(card.ability.extra) == 'table' and card.ability.extra.interest) or 1
-            
-            if G.jokers and G.jokers.cards then
-                for _, v in ipairs(G.jokers.cards) do
-                    if v.ability and v.ability.name == 'To the Moon' and not v.debuff then
-                        ttm_count = ttm_count + 1
-                    end
-                end
-            end
-            
-            G.GAME.interest_amount = 1 + (ttm_count * interest_val)
-            
-            local is_green = G.GAME.selected_back and (G.GAME.selected_back.effect.center.key == 'b_green')
-            local cap = is_green and 0 or 25
-            
-            if G.GAME.used_vouchers.v_seed_money then cap = cap + 25 end
-            if G.GAME.used_vouchers.v_money_tree then cap = cap + 50 end
-            G.GAME.interest_cap = cap + (ttm_count * 10)
-        end
-    end,
-    
-    remove_from_deck = function(self, card, from_debuff)
-        local ttm_count = 0
-        local interest_val = (type(card.ability.extra) == 'table' and card.ability.extra.interest) or 1
-        
-        if G.jokers and G.jokers.cards then
-            for _, v in ipairs(G.jokers.cards) do
-                if v ~= card and v.ability and v.ability.name == 'To the Moon' and not v.debuff then
-                    ttm_count = ttm_count + 1
-                end
-            end
-        end
-        
-        G.GAME.interest_amount = 1 + (ttm_count * interest_val)
-        
-        local is_green = G.GAME.selected_back and (G.GAME.selected_back.effect.center.key == 'b_green')
-        local cap = is_green and 0 or 25
-        
-        if G.GAME.used_vouchers.v_seed_money then cap = cap + 25 end
-        if G.GAME.used_vouchers.v_money_tree then cap = cap + 50 end
-        
-        G.GAME.interest_cap = cap + (ttm_count * 10)
-    end
-}, true)
 
 SMODS.Joker:take_ownership('j_hit_the_road', { perishable_compat = false }, true)
 
