@@ -125,16 +125,7 @@
           "{C:inactive}(Currently {X:mult,C:white} X#2# {C:inactive} Mult)"
         ]
       },
-      "j_to_the_moon": {
-        "name": "To the Moon",
-        "text": [
-          "Earn an extra {C:money}$#1#{} of",
-          "{C:attention}interest{} for every {C:money}$5{} you",
-          "have at end of round.",
-          "Increase cap on interest earned",
-          "per round by {C:money}$2{}"
-        ]
-      },
+
       "j_hanging_chad": {
         "name": "Hanging Chad",
         "text": [
