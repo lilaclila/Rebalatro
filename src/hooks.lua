@@ -408,7 +408,7 @@ if Card and Card.get_end_of_round_effect then
         
         if self.seal == 'Blue' and context and not self.debuff then
             if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-                self.ability.blue_seal_triggers = (self.ability.blue_seal_triggers or 0) + 1
+                self.ability.blue_seal_triggers = (self.ability.blue_seal_triggers or 0)
                 if self.ability.blue_seal_triggers >= 3 then
                     G.E_MANAGER:add_event(Event({
                         trigger = 'after',
